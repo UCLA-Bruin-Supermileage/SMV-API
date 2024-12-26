@@ -26,7 +26,7 @@ def redirect_home(request):
     return redirect(reverse('dash_admin'))
 
 urlpatterns = [
-    path('', redirect_home),
+    # path('', redirect_home),
     path('admin/', admin.site.urls),
-    path('dashboard/', include('mqtt.urls')),
+    path('', include('mqtt.urls')),
 ]

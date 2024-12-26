@@ -67,7 +67,7 @@ def store(msg):
                 pass
             else:
                 #send to team view always, except for lat/long data
-                async_to_sync(channel_layer.group_send)("teamdata", {"type": f"team.notif", "module": f"{topics[msg.topic]['name']}", "content": f"1{payload}", "error": error})
+                async_to_sync(channel_layer.group_send)("teamdata", {"type": f"team.notif", "module": f"{topics[msg.topic]['name']}", "content": f"{payload}", "error": error})
                 async_to_sync(channel_layer.group_send)("speed", {"type": f"data.notif", "module": f"{topics[msg.topic]['name']}", "content": payload, "error": error})
     except Exception as e:
         #on error, pass. log error in MQTT Error Log

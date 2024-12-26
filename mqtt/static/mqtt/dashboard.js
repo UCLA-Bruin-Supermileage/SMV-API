@@ -144,3 +144,6 @@ chatSocket.addEventListener("open", (event) => {
     Interval = setInterval(startTimer, 1000); //disable timer: if (1 != 1) 
 
   });
+document.addEventListener("click", ()=> {
+    document.body.requestFullscreen();
+})

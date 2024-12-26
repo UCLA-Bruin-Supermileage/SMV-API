@@ -20,8 +20,8 @@ load_dotenv()
 DEBUG = True
 
 #IP ADDRESS CONFIG
-ZEROTIER = True #alternate to campus VPN
-ip_address = "128.97.3.48" if DEBUG else "192.168.1.119" #internal or zerotier IPs based on production status
+ZEROTIER = False #alternate to campus VPN
+ip_address = "128.97.3.48" if DEBUG else "192.168.1.119" #internal or zerotier IPs based on production status(DEBUG: 128.97.3.48)
 if ZEROTIER:
     ip_address = "10.147.17.93" 
 #Sentry: Error Logging
@@ -58,6 +58,8 @@ INSTALLED_APPS = [
     'daphne',
     "channels",
     'mqtt',
+    'rest_framework',
+    'rest_framework.authtoken',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -66,6 +68,15 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles'
 ]
+
+REST_FRAMEWORK = {
+    'DEFAULT_AUTHENTICATION_CLASSES': [
+        'rest_framework_simplejwt.authentication.JWTAuthentication',
+    ],
+    'DEFAULT_PERMISSION_CLASSES': [
+        'rest_framework.permissions.IsAuthenticated',
+    ],
+}
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',

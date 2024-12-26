@@ -51,6 +51,24 @@ chatSocket.onmessage = function(e) {
         case 'power_control.voltage':
             document.getElementById("voltage_read").innerHTML = `${Math.round(data['content'])} V`
             break;
+        case "uimessage.blink_right":
+            if (data['content'] == 1.0)
+            {
+                document.getElementById("blink_right").style.display = 'block';
+            }
+            else{
+                document.getElementById("blink_right").style.display = 'none';
+            }
+            break;
+        case "uimessage.blink_left":
+            if (data['content'] == 1.0)
+            {
+                document.getElementById("blink_left").style.display = 'block';
+            }
+            else{
+                document.getElementById("blink_left").style.display = 'none';
+            }
+            break;
         //implement rest of the cases for all dashboard modules
         default:
             //error handling
@@ -126,3 +144,6 @@ chatSocket.addEventListener("open", (event) => {
     Interval = setInterval(startTimer, 1000); //disable timer: if (1 != 1) 
 
   });
+  document.addEventListener("DOMContentLoaded", ()=> {
+    document.querySelector("body").requestFullscreen();
+  })

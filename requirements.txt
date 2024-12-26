@@ -7,3 +7,5 @@ python-dotenv
 channels-redis
 sentry_sdk #error logging
 pytz #timezone
+djangorestframework
+djangorestframework-simplejwt
