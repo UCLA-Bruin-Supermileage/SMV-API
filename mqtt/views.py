@@ -5,19 +5,11 @@ from .models import Trip
 import threading
 import json
 from datetime import datetime
-from django.contrib.auth import authenticate, login
-from django.http import HttpResponseRedirect
-from django.urls import reverse
 
-from django.contrib.auth.models import Group, User
-from rest_framework.views import APIView
 from rest_framework.response import Response
-from rest_framework import authentication, permissions, viewsets
+from rest_framework import permissions, viewsets
 from .serializers import TripSerializer, UserSerializer
-
-from rest_framework.authtoken.models import Token
-from rest_framework.decorators import api_view, action
-
+from rest_framework.decorators import action
 from rest_framework_simplejwt.authentication import JWTAuthentication
 
 
@@ -108,18 +100,6 @@ class TripViewset(viewsets.ModelViewSet):
 #             })
 #     else:
 #         raise Http404
-    
-@api_view(['POST'])
-def login_view(request):
-    username = request.data.get('username')
-    password = request.data.get('password')
-    user = authenticate(username=username, password=password)
-
-    if user:
-        token, created = Token.objects.get_or_create(user=user)
-        return Response({'token': token.key})
-    else:
-        return Response({'error': 'Invalid credentials'}, status=400)
 
 #threading: starts and maintains MQTT subscription in the background, using run(topics) function from helper
 thread = threading.Thread(target=run, name="MQTT_Subscribe", daemon=True)
