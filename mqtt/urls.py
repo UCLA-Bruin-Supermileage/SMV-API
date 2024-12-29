@@ -14,7 +14,7 @@ urlpatterns = [
     path('api/token/refresh/', TokenRefreshView.as_view(), name='token_refresh'),
     path("", views.dash_admin, name="dash_admin"),
     path("team-view", views.team_view, name="team_view"),
-    path("login", views.login_view, name="login"),
+    # path("login", views.login_view, name="login"),
     path("speedometer", views.index, name="index"),
 
     #conceptual ideation for team dash
