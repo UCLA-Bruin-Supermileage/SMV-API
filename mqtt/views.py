@@ -67,7 +67,7 @@ class TripViewset(viewsets.ModelViewSet):
             #allow no authentication for get
             if self.action in ['list', 'retrieve', 'last']:  
                 return [permissions.AllowAny()]  # No authentication needed for GET
-            return [permissions.IsAuthenticated()]  
+            return [permissions.AllowAny()]  
     @action(detail=False, methods=['get'], permission_classes=[permissions.AllowAny])
     def last(self, request, *args, **kwargs):
         """
@@ -82,6 +82,17 @@ class TripViewset(viewsets.ModelViewSet):
         queryset = self.get_queryset()  # Fetch trips
         serializer = self.get_serializer(queryset, many=True)
         return Response(serializer.data)
+    @action(detail=False, methods=['get'], permission_classes=[permissions.AllowAny])
+    def stop(self, request, *args, **kwargs):
+        """
+        stops trip and sets most recent trip stop time to now
+        """
+        trip = Trip.objects.all().order_by('-id').last()
+        trip.stop =  datetime.now()
+        trip.save()
+        serializer = self.get_serializer(trip)
+        return Response(serializer.data)
+    
 
 # def login_view(request):
 #     if request.method == "POST":
