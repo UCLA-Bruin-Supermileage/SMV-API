@@ -59,14 +59,16 @@ chatSocket.onmessage = function(e) {
         //TODO: implement rest of the cases for all dashboard modules
         default:
             break;
-
     }
 };
 
 chatSocket.onclose = function(e) {
     console.error('Chat socket closed unexpectedly');
 };
-
+var polyline = L.polyline([[34.0583555,-118.4432201]], {color: 'red'}).addTo(map);
+map.fitBounds(polyline.getBounds());
+// polyline.addLatLng();
+// L.marker([34.0709835,-118.4460503]).addTo(map);
 })
 
 

@@ -16,6 +16,7 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path, include, reverse
 from django.shortcuts import redirect
+from drf_spectacular.views import SpectacularAPIView, SpectacularSwaggerView, SpectacularRedocView
 
 admin.site.enable_nav_sidebar = False
 admin.site.site_header = 'SMV Admin Dashboard'
@@ -26,7 +27,10 @@ def redirect_home(request):
     return redirect(reverse('dash_admin'))
 
 urlpatterns = [
-    path('', redirect_home),
+    # path('', redirect_home),
     path('admin/', admin.site.urls),
-    path('dashboard/', include('mqtt.urls')),
+    path('', include('mqtt.urls')),
+    path('apidocs/schema/', SpectacularAPIView.as_view(), name='schema'),
+    path('apidocs/schema/swagger-ui/', SpectacularSwaggerView.as_view(url_name='schema'), name='swagger-ui'),
+    path('apidocs/schema/redoc/', SpectacularRedocView.as_view(url_name='schema'), name='redoc'),
 ]

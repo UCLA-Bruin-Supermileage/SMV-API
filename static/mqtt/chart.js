@@ -1,5 +1,5 @@
 var Interval;
-const maxValues = 100; 
+const maxValues = 10; 
 var startTime;
 
 /**************************************
@@ -121,11 +121,6 @@ let rpm = new Chart(document.getElementById('rpm'), {
         data: [],
         borderWidth: 1,
         borderColor: "#FF0000",
-      }, {
-        label: 'Bear 2 RPM',
-        data:[],
-        borderWidth:1,
-        borderColor: "#0000FF",
       }]
     },
     options: {
@@ -136,7 +131,7 @@ let rpm = new Chart(document.getElementById('rpm'), {
         title: {
           color: "black",
           display: true,
-          text: 'RPM of Motors 1 and 2'
+          text: 'RPM of Motor 1'
         }
      },
       scales: {
@@ -160,7 +155,49 @@ let rpm = new Chart(document.getElementById('rpm'), {
     }
   }
 });
-
+let rpm_again = new Chart(document.getElementById('rpm_again'), {
+  type: 'line',
+  data: {
+    labels: [],
+    datasets: [{
+      label: 'Bear 2 RPM',
+      data:[],
+      borderWidth:1,
+      borderColor: "#0000FF",
+    }]
+  },
+  options: {
+    plugins: {
+      legend: {
+        position: 'top',
+      },
+      title: {
+        color: "black",
+        display: true,
+        text: 'RPM of Motor 2'
+      }
+   },
+    scales: {
+      y: {
+        title: {
+          color: "black",
+          display: true,
+          text: "RPM",
+        },
+        grid: {
+          color: "#cedade"
+        }
+      },
+      x: {
+        title: {
+          color: "black",
+          display: true,
+          text: "Time (HH:MM:SS)",
+        },
+      }
+  }
+}
+});
 
 //defining chart daq.speed, init empty
 let power = new Chart(document.getElementById('power_control.power'), {
@@ -298,7 +335,7 @@ let voltage = new Chart(document.getElementById('power_control.voltage'), {
 });
 
 //defining chart daq.speed, init empty
-let temp = new Chart(document.getElementById('power_control.temperature'), {
+let temp = new Chart(document.getElementById('hsmessage.temperature'), {
   type: 'line',
   data: {
     labels: [],
@@ -349,11 +386,13 @@ function addData(chart, newData, index=-1) {
   var tdMin = Math.floor((timeDiffdate-tdHr*3600)/60);
   var tdSec = Math.floor(timeDiffdate-tdHr*3600-tdMin*60);
   var label = tdHr + ":" + tdMin +":"+ tdSec;
+
     if (index==-1) {
       chart.data.labels.push(label);
-      chart.data.datasets.forEach((dataset) => {
-          dataset.data.push(newData);
-      });
+      chart.data.datasets[0].data.push(newData)
+      // chart.data.datasets.forEach((dataset) => {
+      //     dataset.data.push(newData);
+      // });
     }
     else {
       chart.data.labels.push(label);
@@ -362,11 +401,12 @@ function addData(chart, newData, index=-1) {
     if (chart.data.labels.length > maxValues)
     {
       chart.data.labels.shift();
-      for (let i = 0;i<chart.datasets.length;i++){
-        chart.data.datasets[i].data.shift(); //shift all datasets
-      }
+      chart.data.datasets[0].data.shift(); //shift all datasets
+      // if(chart == rpm){
+      //   chart.data.datasets[1].data.shift(); //shift all datasets
+      // }
     }
-    chart.update();
+    chart.update('none');
 }
 
 Chart.defaults.borderColor = "#8c8b8b";
@@ -403,13 +443,13 @@ chatSocket.onmessage = function(e) {
             break;
         case 'bear1.rpm':
             //Motor 1 RPM data
-            addData(rpm, data['content'],0)
+            addData(rpm, data['content'])
             break;
         case 'bear2.rpm':
             //Motor 1 RPM data
-            addData(rpm, data['content'],1)
+            addData(rpm_again, data['content'])
             break;
-        case 'power_control.temperature':
+        case 'hsmessage.temperature':
           //Motor 1 RPM data
           addData(temp, data['content'],0)
           break;
