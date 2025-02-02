@@ -5,6 +5,8 @@ from .models import Trip
 import threading
 import json
 from datetime import datetime, date
+from drf_spectacular.utils import extend_schema, OpenApiParameter, OpenApiExample
+from drf_spectacular.types import OpenApiTypes
 
 from rest_framework.response import Response
 from rest_framework import permissions, viewsets
@@ -48,7 +50,7 @@ def team_view(request):
 """
 API Endpoint: /api/trip/<int:id (optional)>
 API endpoint that allows trips to be viewed or edited.
-- Can GET /api/trip/: return all trips. NO AUTHENTIATION REQUIRED
+- Can GET /api/trip/: return all trips. NO AUTHENTICATION REQUIRED
 - Can POST /api/trip/: 
     {
         "name": "",
@@ -71,23 +73,31 @@ class TripViewset(viewsets.ModelViewSet):
     @action(detail=False, methods=['get'], permission_classes=[permissions.AllowAny])
     def last(self, request, *args, **kwargs):
         """
-        return trip with highest ID
+        return trip with highest ID, or last trip
         """
         trip = Trip.objects.all().order_by('-id').first()
         if trip:
             serializer = self.get_serializer(trip)
             return Response(serializer.data)
         return Response({'detail': 'No trips found'}, status=404)
+    @extend_schema(
+            parameters = [OpenApiParameter(name='name', description="New Trip Name", type=OpenApiTypes.STR, required=True)],
+    )
     @action(detail=False, methods=['post'], permission_classes=[permissions.AllowAny])
     def start(self, request, *args, **kwargs):
         """
-        Create a new trip with start time now, name from request
+        Create a new trip with start time now, name from request \n
+        Input: {"name": "trip_name"} \n
+        Returns: New Trip JSON
         """
         trip = Trip.objects.create(name=request.data['name'], date_created=date.today(), start=datetime.now())
         trip.save()
         serializer = self.get_serializer(trip)
         return Response(serializer.data)
     def list(self, request, *args, **kwargs):
+        """
+        List all trips, no authentication required
+        """
         queryset = self.get_queryset()  # Fetch trips
         serializer = self.get_serializer(queryset, many=True)
         return Response(serializer.data)
