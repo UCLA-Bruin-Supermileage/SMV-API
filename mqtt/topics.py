@@ -88,7 +88,7 @@ topics_list = {
         "model": Blinker,
     },
     #HS Message: for analysis
-    "/HSMessage/Temp": {
+    "   ": {
         "name": "hsmessage.temperature",
         "model": Temperature,
     },

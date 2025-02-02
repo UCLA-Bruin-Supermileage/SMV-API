@@ -4,7 +4,7 @@ from .helper import run, test_mqttStress
 from .models import Trip
 import threading
 import json
-from datetime import datetime
+from datetime import datetime, date
 
 from rest_framework.response import Response
 from rest_framework import permissions, viewsets
@@ -62,12 +62,12 @@ class TripViewset(viewsets.ModelViewSet):
     authentication_classes = [JWTAuthentication] # 
     # permission_classes = [permissions.IsAuthenticated] # 
     queryset = Trip.objects.all()
-    serializer_class = TripSerializer
+    serializer_class = TripSerializer #includes default actions
     def get_permissions(self):
             #allow no authentication for get
-            if self.action in ['list', 'retrieve', 'last']:  
+            if self.action in ['list', 'retrieve', 'last', 'post']:  
                 return [permissions.AllowAny()]  # No authentication needed for GET
-            return [permissions.IsAuthenticated()]  
+            return [permissions.AllowAny()]  
     @action(detail=False, methods=['get'], permission_classes=[permissions.AllowAny])
     def last(self, request, *args, **kwargs):
         """
@@ -78,11 +78,34 @@ class TripViewset(viewsets.ModelViewSet):
             serializer = self.get_serializer(trip)
             return Response(serializer.data)
         return Response({'detail': 'No trips found'}, status=404)
+    @action(detail=False, methods=['post'], permission_classes=[permissions.AllowAny])
+    def start(self, request, *args, **kwargs):
+        """
+        Create a new trip with start time now, name from request
+        """
+        trip = Trip.objects.create(name=request.data['name'], date_created=date.today(), start=datetime.now())
+        trip.save()
+        serializer = self.get_serializer(trip)
+        return Response(serializer.data)
     def list(self, request, *args, **kwargs):
         queryset = self.get_queryset()  # Fetch trips
         serializer = self.get_serializer(queryset, many=True)
         return Response(serializer.data)
 
+class StartStop(viewsets.ViewSet):
+    authentication_classes = [JWTAuthentication] # 
+    permission_classes = [permissions.IsAuthenticated] # 
+    def create(self, request):
+        data = request.data
+        trip = Trip.objects.last()
+        if trip:
+            if data['start']:
+                trip.start = datetime.now()
+            if data['stop']:
+                trip.stop = datetime.now()
+            trip.save()
+            return Response({'status': '200'})
+        return Response({'detail': 'No trips found'}, status=404)
 # def login_view(request):
 #     if request.method == "POST":
 #         # Attempt to sign user in

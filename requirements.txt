@@ -9,3 +9,4 @@ sentry_sdk #error logging
 pytz #timezone
 djangorestframework
 djangorestframework-simplejwt
+coreapi
