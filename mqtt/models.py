@@ -63,7 +63,9 @@ class Magnetometer(models.Model):
         verbose_name_plural = "  Magnetometer" 
 class Accel(models.Model):
     trip = models.ForeignKey('Trip', on_delete=models.CASCADE)
-    data = models.DecimalField(max_digits=6, decimal_places=3)
+    x = models.DecimalField(max_digits=6, decimal_places=3, default=0, blank=0, null=0)
+    y = models.DecimalField(max_digits=6, decimal_places=3, default=0, blank=0, null=0)
+    z = models.DecimalField(max_digits=6, decimal_places=3, default=0, blank=0, null=0)
     date = models.DateTimeField()
     class Meta:
         verbose_name_plural = "  Acceleration Data" 

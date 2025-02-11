@@ -1,5 +1,14 @@
 from .models import *
 #SET TOPICS HERE: FORMAT: (mqtt_topic, device.data, model)
+
+"""
+2025 TOPICS:
+- Accelerometer
+- Torque Sensor
+- Pressure Sensor
+- Hall Sensor
+"""
+
 topics_list = {
     #bear_1
     "/Bear_1/RPM": {
