@@ -2,12 +2,14 @@ from django.shortcuts import render
 from django.http.response import JsonResponse, Http404
 from .helper import run, test_mqttStress
 from .models import Trip, SpeedData, RPMData, Accel, Magnetometer, Gyro_x, Gyro_y, Gyro_z
+from .topics import topics_list as topics
 import threading
 import json
 from datetime import datetime, date
 import csv
 from drf_spectacular.utils import extend_schema, OpenApiParameter, OpenApiExample
 from drf_spectacular.types import OpenApiTypes
+from django.http import HttpResponse
 
 from rest_framework.response import Response
 from rest_framework import permissions, viewsets
@@ -97,8 +99,9 @@ class TripViewset(viewsets.ModelViewSet):
         return Response(serializer.data)
     @action(detail=False, methods=['post'], permission_classes=[permissions.AllowAny])
     def export(self, request, *args, **kwargs):
-        sensor = request.data.get('name')
-        requestID = request.data.get('id')
+        sensor = request.data.get('sensor')
+        requestID = request.data.get('trip_id')
+        formatRequested = request.data.get('format')
 
         if not requestID:
             return Response({"error": "Missing request ID"}, status=400)
@@ -107,26 +110,18 @@ class TripViewset(viewsets.ModelViewSet):
 
         # topics[msg.topic]['model'].objects.create(date=datetime.now(), data=payload, trip=Trip.objects.last()) 
         
-        match sensor:
-            case '/Bear_1/RPM' | '/Bear_2/RPM':
-                model = RPMData.objects.get(id=requestID)
-            case '/HSMessage/Accel':
-                model = Accel.objects.get(id=requestID)
-            case '/HSMessage/Magnetometer':
-                model = Magnetometer.objects.get(id=requestID)
-            case '/HSMessage/Gyro_x':
-                model = Gyro_x.objects.get(id=requestID)
-            case '/HSMessage/Gyro_y':
-                model = Gyro_y.objects.get(id=requestID)
-            case '/HSMessage/Gyro_z':
-                model = Gyro_z.objects.get(id=requestID)
-            case '/DAQ/Speed':
-                model = SpeedData.objects.get(id=requestID)
-            case _:
-                return Response({"error": "Invalid sensor type"}, status=400)
+        model = topics[sensor]['model'].objects.filter(id=requestID).first()
 
-        serializer = self.get_serializer(model)
-        return Response(serializer.data)
+        if(formatRequested == 'json'):
+            serializer = self.get_serializer(model)
+            return Response(serializer.data)
+        
+        response = HttpResponse(content_type='text/csv')
+        response['Content-Disposition'] = 'attachment; filename="sensor_data.csv"'
+        writer = csv.writer(response)
+        writer.writerow(['Date', 'Data', 'Trip'])
+        writer.writerow([model.date, model.data, model.trip])
+        return response
 
     def list(self, request, *args, **kwargs):
         """
