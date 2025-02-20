@@ -1,10 +1,11 @@
 from django.shortcuts import render
 from django.http.response import JsonResponse, Http404
 from .helper import run, test_mqttStress
-from .models import Trip
+from .models import Trip, SpeedData, RPMData, Accel, Magnetometer, Gyro_x, Gyro_y, Gyro_z
 import threading
 import json
 from datetime import datetime, date
+import csv
 from drf_spectacular.utils import extend_schema, OpenApiParameter, OpenApiExample
 from drf_spectacular.types import OpenApiTypes
 
@@ -94,6 +95,39 @@ class TripViewset(viewsets.ModelViewSet):
         trip.save()
         serializer = self.get_serializer(trip)
         return Response(serializer.data)
+    @action(detail=False, methods=['post'], permission_classes=[permissions.AllowAny])
+    def export(self, request, *args, **kwargs):
+        sensor = request.data.get('name')
+        requestID = request.data.get('id')
+
+        if not requestID:
+            return Response({"error": "Missing request ID"}, status=400)
+        
+        requestId = int(requestID)
+
+        # topics[msg.topic]['model'].objects.create(date=datetime.now(), data=payload, trip=Trip.objects.last()) 
+        
+        match sensor:
+            case '/Bear_1/RPM' | '/Bear_2/RPM':
+                model = RPMData.objects.get(id=requestID)
+            case '/HSMessage/Accel':
+                model = Accel.objects.get(id=requestID)
+            case '/HSMessage/Magnetometer':
+                model = Magnetometer.objects.get(id=requestID)
+            case '/HSMessage/Gyro_x':
+                model = Gyro_x.objects.get(id=requestID)
+            case '/HSMessage/Gyro_y':
+                model = Gyro_y.objects.get(id=requestID)
+            case '/HSMessage/Gyro_z':
+                model = Gyro_z.objects.get(id=requestID)
+            case '/DAQ/Speed':
+                model = SpeedData.objects.get(id=requestID)
+            case _:
+                return Response({"error": "Invalid sensor type"}, status=400)
+
+        serializer = self.get_serializer(model)
+        return Response(serializer.data)
+
     def list(self, request, *args, **kwargs):
         """
         List all trips, no authentication required
