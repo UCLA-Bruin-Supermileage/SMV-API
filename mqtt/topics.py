@@ -1,4 +1,5 @@
 from .models import *
+from .serializers import *
 #SET TOPICS HERE: FORMAT: (mqtt_topic, device.data, model)
 
 """
@@ -120,11 +121,13 @@ topics_list = {
     "/HSMessage/Accel": {
         "name": "hsmessage.accel",
         "model": Accel,
+        "serializer": AccelSerializer
     },
     #DAQMessage
     "/DAQ/Speed": {
         "name": "daq.speed",
         "model": SpeedData,
+        "serializer": SpeedSerializer
     },
     "/DAQ/Longitude": {
         "name": "daq.longitude",
