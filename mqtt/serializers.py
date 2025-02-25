@@ -13,6 +13,7 @@ class TripSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
         model = Trip
         fields = ['id', 'name', 'date_created', 'start', 'stop']
+
 class AccelSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
         model = Accel
@@ -21,3 +22,4 @@ class SpeedSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
         model = SpeedData
         fields = ['id', 'name', 'date_created', 'data']
+

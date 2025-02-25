@@ -20,7 +20,6 @@ load_dotenv()
 DEBUG = True
 
 #IP ADDRESS CONFIG
-ZEROTIER = False #alternate to campus VPN
 ip_address = "192.168.69.2" #internal or zerotier IPs based on production status(DEBUG: 128.97.3.48)
 
 #Sentry: Error Logging
