@@ -1,14 +1,16 @@
 from django.shortcuts import render
 from django.http.response import JsonResponse, Http404
 from .helper import run, test_mqttStress
-from .models import Trip
+from .models import Trip, Accel
 import threading
+from .topics import topics_list
 import json
 from datetime import datetime, date
 from drf_spectacular.utils import extend_schema, OpenApiParameter, OpenApiExample
 from drf_spectacular.types import OpenApiTypes
 
 from rest_framework.response import Response
+
 from rest_framework import permissions, viewsets
 from .serializers import TripSerializer, UserSerializer
 from rest_framework.decorators import action
@@ -101,6 +103,21 @@ class TripViewset(viewsets.ModelViewSet):
         queryset = self.get_queryset()  # Fetch trips
         serializer = self.get_serializer(queryset, many=True)
         return Response(serializer.data)
+ 
+class LastNDataViewset(viewsets.ViewSet):
+    """
+    API endpoint that allows last N data points to be viewed.
+    - Can GET /api/lastN/: return all data points. NO AUTHENTICATION REQUIRED
+    """
+    authentication_classes = [JWTAuthentication] # 
+    permission_classes = [permissions.AllowAny] # 
+    queryset = Accel.objects.all()
+    def list(self, request):
+        # Note the use of `get_queryset()` instead of `self.queryset`
+        queryset = topics_list[request.GET.get("sensor")]['model'].objects.all()
+        serializer = topics_list[request.GET.get("sensor")]['serializer'](queryset)
+        return Response(serializer.data)
+
 
 class StartStop(viewsets.ViewSet):
     authentication_classes = [JWTAuthentication] # 
