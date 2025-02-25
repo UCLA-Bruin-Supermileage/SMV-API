@@ -5,18 +5,12 @@ from .models import Trip, Accel
 import threading
 from .topics import topics_list
 import json
-<<<<<<< HEAD
-from datetime import datetime
-
-from rest_framework.response import Response
-=======
 from datetime import datetime, date
 from drf_spectacular.utils import extend_schema, OpenApiParameter, OpenApiExample
 from drf_spectacular.types import OpenApiTypes
 
 from rest_framework.response import Response
 
->>>>>>> c785392ad1754da61cefe7d69140c77ee4d26a2b
 from rest_framework import permissions, viewsets
 from .serializers import TripSerializer, UserSerializer
 from rest_framework.decorators import action
@@ -58,11 +52,7 @@ def team_view(request):
 """
 API Endpoint: /api/trip/<int:id (optional)>
 API endpoint that allows trips to be viewed or edited.
-<<<<<<< HEAD
-- Can GET /api/trip/: return all trips. NO AUTHENTIATION REQUIRED
-=======
 - Can GET /api/trip/: return all trips. NO AUTHENTICATION REQUIRED
->>>>>>> c785392ad1754da61cefe7d69140c77ee4d26a2b
 - Can POST /api/trip/: 
     {
         "name": "",
