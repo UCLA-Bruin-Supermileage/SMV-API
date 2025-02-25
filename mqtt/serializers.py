@@ -1,5 +1,9 @@
 from django.contrib.auth.models import Group, User
+<<<<<<< HEAD
 from .models import Trip
+=======
+from .models import Trip, Accel, SpeedData
+>>>>>>> c785392ad1754da61cefe7d69140c77ee4d26a2b
 from rest_framework import serializers
 
 

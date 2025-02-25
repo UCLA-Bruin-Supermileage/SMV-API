@@ -46,16 +46,17 @@
                     <li>
                         <a href="{% url 'index' %}">Speedometer</a>
                     </li>
-                    {% if user.is_staff %}
                     <li>
                         <a href="{% url 'admin:index' %}">Django Admin</a>
                     </li>
-                    {% endif %}
                     <li>
                         <a href="{% url 'dash_admin' %}">Landing Page</a>
                     </li>
                     <li>
                         <a href="{% url 'team_view' %}">Team View</a>
+                    </li>
+                    <li>
+                        <a href="/apidocs/schema/swagger-ui">API Documentation</a>
                     </li>
                     {% if user.is_staff %}
                     <li>
@@ -88,6 +89,9 @@
             </li>
             <li style="font-size: 20px;">
                 <b><a href="{% url 'team_view' %}">Team View:</a></b> Live graphs to monitor car data
+            </li>
+            <li style="font-size: 20px;">
+                <b><a href="/apidocs/schema/swagger-ui">API Documentation:</a></b> Documentation for the API
             </li>
         </ul>
     </p>

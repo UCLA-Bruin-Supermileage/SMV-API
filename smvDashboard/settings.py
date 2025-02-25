@@ -20,10 +20,8 @@ load_dotenv()
 DEBUG = True
 
 #IP ADDRESS CONFIG
-ZEROTIER = False #alternate to campus VPN
-ip_address = "128.97.3.48" if DEBUG else "192.168.1.119" #internal or zerotier IPs based on production status(DEBUG: 128.97.3.48)
-if ZEROTIER:
-    ip_address = "10.147.17.93" 
+ip_address = "192.168.69.2" #internal or zerotier IPs based on production status(DEBUG: 128.97.3.48)
+
 #Sentry: Error Logging
 sentry_sdk.init(
     dsn="https://8c2277f2745be76cc3c8f9b1fb3afd3b@o1217115.ingest.sentry.io/4506261170356224",
@@ -66,7 +64,8 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.admindocs',
     'django.contrib.messages',
-    'django.contrib.staticfiles'
+    'django.contrib.staticfiles',
+    'drf_spectacular'
 ]
 
 REST_FRAMEWORK = {
@@ -74,8 +73,16 @@ REST_FRAMEWORK = {
         'rest_framework_simplejwt.authentication.JWTAuthentication',
     ],
     'DEFAULT_PERMISSION_CLASSES': [
-        'rest_framework.permissions.IsAuthenticated',
+        'rest_framework.permissions.AllowAny',
     ],
+    'DEFAULT_SCHEMA_CLASS': 'drf_spectacular.openapi.AutoSchema',
+
+}
+SPECTACULAR_SETTINGS = {
+    'TITLE': 'SMV Dashboard API',
+    'DESCRIPTION': 'API for the SMV Dashboard',
+    'VERSION': '1.0.0',
+    'SERVE_INCLUDE_SCHEMA': False,
 }
 
 MIDDLEWARE = [

@@ -1,5 +1,15 @@
 from .models import *
+from .serializers import *
 #SET TOPICS HERE: FORMAT: (mqtt_topic, device.data, model)
+
+"""
+2025 TOPICS:
+- Accelerometer
+- Torque Sensor
+- Pressure Sensor
+- Hall Sensor
+"""
+
 topics_list = {
     #bear_1
     "/Bear_1/RPM": {
@@ -88,7 +98,7 @@ topics_list = {
         "model": Blinker,
     },
     #HS Message: for analysis
-    "/HSMessage/Temp": {
+    "   ": {
         "name": "hsmessage.temperature",
         "model": Temperature,
     },
@@ -111,11 +121,13 @@ topics_list = {
     "/HSMessage/Accel": {
         "name": "hsmessage.accel",
         "model": Accel,
+        "serializer": AccelSerializer
     },
     #DAQMessage
     "/DAQ/Speed": {
         "name": "daq.speed",
         "model": SpeedData,
+        "serializer": SpeedSerializer
     },
     "/DAQ/Longitude": {
         "name": "daq.longitude",
