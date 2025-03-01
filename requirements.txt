@@ -9,3 +9,4 @@ djangorestframework
 djangorestframework-simplejwt
 coreapi
 drf-spectacular==0.28.0
+tzdata

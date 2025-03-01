@@ -39,7 +39,7 @@ RUN a2enmod ssl \
     && openssl req -x509 -nodes -days 365 -newkey rsa:2048 \
        -keyout /etc/apache2/ssl/apache-selfsigned.key \
        -out /etc/apache2/ssl/apache-selfsigned.crt \
-       -subj "/C=US/ST=State/L=City/O=Company/OU=Org/CN=localhost"
+       -subj "/C=US/ST=CA/L=LA/O=UCLA/OU=SMV/CN=localhost"
 
 # Expose port 80 for Apache
 EXPOSE 80
