@@ -3,8 +3,6 @@ from paho.mqtt import client as mqtt_client
 from .models import Trip, MQTTError
 from datetime import datetime
 from .topics import topics_list as topics
-from channels.layers import get_channel_layer
-from asgiref.sync import async_to_sync
 import os
 import sys
 from random import randint
@@ -39,7 +37,6 @@ def connect_mqtt(client_id=client_id) -> mqtt_client:
     return client
 
 def store(msg):
-    channel_layer = get_channel_layer()
     try:
         #1. Compare msg value. Is it in bounds of min/max?
         payload = round(abs(float(msg.payload.decode())), 3) #absolute value of input, rounded to 3 decimal places
@@ -47,8 +44,6 @@ def store(msg):
             #if out of bounds(needs to be [0, 999.000))
             payload =  round(float(msg.payload.decode()), 3)
             MQTTError.objects.create(module='mqtt', event='receive', message=f'Invalid Argument {msg.payload.decode()}', error=True, time=datetime.now(), trip=Trip.objects.last())
-            async_to_sync(channel_layer.group_send)("speed", {"type": f"data.notif", "module": f"{topics[msg.topic]['name']}", "content": payload, "error": True})
-            async_to_sync(channel_layer.group_send)("teamdata", {"type": f"team.notif", "module": f"{topics[msg.topic]['name']}", "content": payload, "error": True})
         
         else:
             #error is false unless specifically set
@@ -67,8 +62,7 @@ def store(msg):
                 pass
             else:
                 #send to team view always, except for lat/long data
-                async_to_sync(channel_layer.group_send)("teamdata", {"type": f"team.notif", "module": f"{topics[msg.topic]['name']}", "content": f"{payload}", "error": error})
-                async_to_sync(channel_layer.group_send)("speed", {"type": f"data.notif", "module": f"{topics[msg.topic]['name']}", "content": payload, "error": error})
+                pass
     except Exception as e:
         #on error, pass. log error in MQTT Error Log
         MQTTError.objects.create(module='mqtt', event='receive', message=f'{e}', error=True, time=datetime.now(), trip=Trip.objects.last())

@@ -11,6 +11,11 @@ Site Paths:
 - /ws: websocket, served via daphne \
 [Notion Link](https://www.notion.so/matthewtsai/57c1ed5ef802477a9a5b9c2ce18886ef?v=d6d9acbf4d27457c8b4f7948b3179b13&pvs=4)
 
+# Docker Instructions
+- FOR PRODUCTION: Set DEBUG=False in smvDashboard/settings.py
+- docker build -t django-apache .
+- docker run -p 443:443 -p 80:80 -d django-apache
+
 # API Documentation:
 ## /api
 

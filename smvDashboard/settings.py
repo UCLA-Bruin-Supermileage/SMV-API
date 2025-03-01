@@ -17,7 +17,7 @@ from dotenv import load_dotenv
 
 load_dotenv()
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = True
 
 #IP ADDRESS CONFIG
 ip_address = "192.168.69.2" #internal or zerotier IPs based on production status(DEBUG: 128.97.3.48)
@@ -53,8 +53,6 @@ ALLOWED_HOSTS = ALLOWED_HOSTS_TYPES['dev' if DEBUG else 'prod']
 # Application definition
 
 INSTALLED_APPS = [
-    'daphne',
-    "channels",
     'mqtt',
     'rest_framework',
     'rest_framework.authtoken',
