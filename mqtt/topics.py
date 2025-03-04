@@ -11,6 +11,239 @@ from .serializers import *
 """
 
 topics_list = {
+    "/Bear_1/Hall_velocity": {
+        "name": "bear1.rpm",
+        "model": RPMData
+        #chart
+    },
+    "/Bear_1/Torque": {
+        "name": "bear1.rpm",
+        "model": RPMData
+        #chart
+    },
+    "/Bear_1/Current": {
+        "name": "bear1.rpm",
+        "model": RPMData
+        #chart
+    },
+    "/Bear_1/Board_Temp": {
+        "name": "bear1.rpm",
+        "model": RPMData
+        #chart
+    },
+    "/Bear_1/Motor_Temp": {
+        "name": "bear1.rpm",
+        "model": RPMData
+        #chart
+    },
+    "/UI/Motor": {
+        "name": "bear1.rpm",
+        "model": RPMData
+        #chart
+    },
+    "/UI/Reverse": {
+        "name": "bear1.rpm",
+        "model": RPMData
+        #chart
+    },
+    "/HS1/Gyro_x": {
+        "name": "bear1.rpm",
+        "model": RPMData
+        #chart
+    },
+    "/HS1/Gyro_y": {
+        "name": "bear1.rpm",
+        "model": RPMData
+        #chart
+    },
+    "/HS1/Gyro_z": {
+        "name": "bear1.rpm",
+        "model": RPMData
+        #chart
+    },
+    "/HS1/Accel_x": {
+        "name": "bear1.rpm",
+        "model": RPMData
+        #chart
+    },
+    "/HS1/Accel_y": {
+        "name": "bear1.rpm",
+        "model": RPMData
+        #chart
+    },
+    "/HS1/Accel_x": {
+        "name": "bear1.rpm",
+        "model": RPMData
+        #chart
+    },
+    "/HS1/Pressure": {
+        "name": "bear1.rpm",
+        "model": RPMData
+        #chart
+    },
+    "/HS1/Torque": {
+        "name": "bear1.rpm",
+        "model": RPMData
+        #chart
+    },
+    "/HS2/Gyro_x": {
+        "name": "bear1.rpm",
+        "model": RPMData
+        #chart
+    },
+    "/HS2/Gyro_y": {
+        "name": "bear1.rpm",
+        "model": RPMData
+        #chart
+    },
+    "/HS2/Gyro_z": {
+        "name": "bear1.rpm",
+        "model": RPMData
+        #chart
+    },
+    "/HS2/Accel_x": {
+        "name": "bear1.rpm",
+        "model": RPMData
+        #chart
+    },
+    "/HS2/Accel_y": {
+        "name": "bear1.rpm",
+        "model": RPMData
+        #chart
+    },
+    "/HS2/Accel_x": {
+        "name": "bear1.rpm",
+        "model": RPMData
+        #chart
+    },
+    "/HS2/Pressure": {
+        "name": "bear1.rpm",
+        "model": RPMData
+        #chart
+    },
+    "/HS2/Torque": {
+        "name": "bear1.rpm",
+        "model": RPMData
+        #chart
+    },
+    "/HS3/Gyro_x": {
+        "name": "bear1.rpm",
+        "model": RPMData
+        #chart
+    },
+    "/HS3/Gyro_y": {
+        "name": "bear1.rpm",
+        "model": RPMData
+        #chart
+    },
+    "/HS3/Gyro_z": {
+        "name": "bear1.rpm",
+        "model": RPMData
+        #chart
+    },
+    "/HS3/Accel_x": {
+        "name": "bear1.rpm",
+        "model": RPMData
+        #chart
+    },
+    "/HS3/Accel_y": {
+        "name": "bear1.rpm",
+        "model": RPMData
+        #chart
+    },
+    "/HS3/Accel_x": {
+        "name": "bear1.rpm",
+        "model": RPMData
+        #chart
+    },
+    "/HS3/Pressure": {
+        "name": "bear1.rpm",
+        "model": RPMData
+        #chart
+    },
+    "/HS3/Torque": {
+        "name": "bear1.rpm",
+        "model": RPMData
+        #chart
+    },
+    "/HS4/Gyro_x": {
+        "name": "bear1.rpm",
+        "model": RPMData
+        #chart
+    },
+    "/HS4/Gyro_y": {
+        "name": "bear1.rpm",
+        "model": RPMData
+        #chart
+    },
+    "/HS4/Gyro_z": {
+        "name": "bear1.rpm",
+        "model": RPMData
+        #chart
+    },
+    "/HS4/Accel_x": {
+        "name": "bear1.rpm",
+        "model": RPMData
+        #chart
+    },
+    "/HS4/Accel_y": {
+        "name": "bear1.rpm",
+        "model": RPMData
+        #chart
+    },
+    "/HS4/Accel_x": {
+        "name": "bear1.rpm",
+        "model": RPMData
+        #chart
+    },
+    "/HS4/Pressure": {
+        "name": "bear1.rpm",
+        "model": RPMData
+        #chart
+    },
+    "/HS4/Torque": {
+        "name": "bear1.rpm",
+        "model": RPMData
+        #chart
+    },
+    "/FC/Gas": {
+        "name": "bear1.rpm",
+        "model": RPMData
+        #chart
+    },
+    "/FC/Brake": {
+        "name": "bear1.rpm",
+        "model": RPMData
+        #chart
+    },
+    "/Joule_H/Power": {
+        "name": "bear1.rpm",
+        "model": RPMData
+        #chart
+    },
+    "/Joule_L/Power": {
+        "name": "bear1.rpm",
+        "model": RPMData
+        #chart
+    },
+    "/DAQ_Board/Longitude": {
+        "name": "bear1.rpm",
+        "model": RPMData
+        #chart
+    },
+    "/DAQ_Board/Latitude": {
+        "name": "bear1.rpm",
+        "model": RPMData
+        #chart
+    },
+    "/DAQ_Board/Speed": {
+        "name": "bear1.rpm",
+        "model": RPMData
+        #chart
+    },
+}
+
+topics_list = {
     #bear_1
     "/Bear_1/RPM": {
         "name": "bear1.rpm",

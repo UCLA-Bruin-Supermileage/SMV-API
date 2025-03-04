@@ -1,8 +1,6 @@
 Django==4.2.7
 paho-mqtt==1.6.1
 psycopg2==2.9.9
-channels==4.0.0 #needed for websocket project
-daphne==4.0.0
 python-dotenv
 channels-redis
 sentry_sdk #error logging
@@ -11,3 +9,4 @@ djangorestframework
 djangorestframework-simplejwt
 coreapi
 drf-spectacular==0.28.0
+tzdata

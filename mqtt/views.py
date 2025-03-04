@@ -8,7 +8,6 @@ import json
 from datetime import datetime, date
 from drf_spectacular.utils import extend_schema, OpenApiParameter, OpenApiExample
 from drf_spectacular.types import OpenApiTypes
-
 from rest_framework.response import Response
 
 from rest_framework import permissions, viewsets
@@ -38,7 +37,6 @@ def dash_admin(request):
                     Trip.objects.create(name=data['data'], date_created=datetime.now(), active=True)
             case "test_mqtt":
                 test_mqttStress(6600)
-                print("done")
         return JsonResponse({"status": "200"})
     else:
         recent_trip = Trip.objects.last()
@@ -108,14 +106,20 @@ class LastNDataViewset(viewsets.ViewSet):
     """
     API endpoint that allows last N data points to be viewed.
     - Can GET /api/lastN/: return all data points. NO AUTHENTICATION REQUIRED
+    - Query parameters:
+        n: number of data points to return
+        sensor: sensor to return data (formatted from topics.py)
     """
     authentication_classes = [JWTAuthentication] # 
     permission_classes = [permissions.AllowAny] # 
     queryset = Accel.objects.all()
     def list(self, request):
         # Note the use of `get_queryset()` instead of `self.queryset`
-        queryset = topics_list[request.GET.get("sensor")]['model'].objects.all()
-        serializer = topics_list[request.GET.get("sensor")]['serializer'](queryset)
+        try:
+            queryset = topics_list[request.GET.get("sensor")]['model'].objects.all()
+            serializer = topics_list[request.GET.get("sensor")]['serializer'](queryset, many=True, context={'request': request})
+        except Exception as e:
+            return Response({'detail': f'Error: {e}'}, status=404)
         return Response(serializer.data)
 
 

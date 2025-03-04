@@ -17,7 +17,7 @@ from dotenv import load_dotenv
 
 load_dotenv()
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = True
 
 #IP ADDRESS CONFIG
 ip_address = "192.168.69.2" #internal or zerotier IPs based on production status(DEBUG: 128.97.3.48)
@@ -53,8 +53,6 @@ ALLOWED_HOSTS = ALLOWED_HOSTS_TYPES['dev' if DEBUG else 'prod']
 # Application definition
 
 INSTALLED_APPS = [
-    'daphne',
-    "channels",
     'mqtt',
     'rest_framework',
     'rest_framework.authtoken',
@@ -187,15 +185,5 @@ STATICFILES_DIRS = (
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/3.2/ref/settings/#default-auto-field
-
-DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
-CHANNEL_LAYERS = {
-    "default": {
-        "BACKEND": "channels_redis.core.RedisChannelLayer",
-        "CONFIG": {
-            "hosts": [(f"{ip_address}", "6379")],
-        },
-    },
-}
 
 CSRF_TRUSTED_ORIGINS = ['https://smv.seas.ucla.edu']
