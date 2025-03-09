@@ -44,7 +44,7 @@ ALLOWED_HOSTS_TYPES = {
     "dev":
     ['localhost'], 
      "prod":
-    ['smv.seas.ucla.edu', '10.147.17.52', '127.0.0.1'], 
+    ['smv.seas.ucla.edu', '10.147.17.52', '127.0.0.1', '192.168.69.10'], 
 }
 
 ALLOWED_HOSTS = ALLOWED_HOSTS_TYPES['dev' if DEBUG else 'prod']
