@@ -184,4 +184,4 @@ STATICFILES_DIRS = (
 # Default primary key field type
 # https://docs.djangoproject.com/en/3.2/ref/settings/#default-auto-field
 
-CSRF_TRUSTED_ORIGINS = ['https://smv.seas.ucla.edu']
+CSRF_TRUSTED_ORIGINS = ['https://smv.seas.ucla.edu', 'https://dev.smv.matthewtsai.uk']
