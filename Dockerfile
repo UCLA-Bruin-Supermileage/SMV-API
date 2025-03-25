@@ -25,7 +25,6 @@ RUN pip3 install --no-cache-dir -r requirements.txt
 
 # Collect static files and migrate
 RUN python3 manage.py collectstatic --noinput
-RUN python3 manage.py migrate --noinput
 
 # Set correct permissions
 RUN chown -R www-data:www-data /var/www/SMV-API
