@@ -23,7 +23,7 @@ COPY . /var/www/SMV-API
 # Install Python dependencies
 RUN pip3 install --no-cache-dir -r requirements.txt
 
-# Collect static files
+# Collect static files and migrate
 RUN python3 manage.py collectstatic --noinput
 
 # Set correct permissions

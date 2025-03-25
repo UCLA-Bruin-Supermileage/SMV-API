@@ -11,363 +11,293 @@ from .serializers import *
 """
 
 topics_list = {
+    #Bear 1
     "/Bear_1/Hall_velocity": {
-        "name": "bear1.rpm",
-        "model": RPMData
-        #chart
+        "name": "bear1.hall_velocity",
+        "model": HallVelocityData
     },
-    "/Bear_1/Torque": {
-        "name": "bear1.rpm",
-        "model": RPMData
-        #chart
+    "/Bear_1/Torque_motor": {
+        "name": "bear1.torque_motor",
+        "model": MotorTorqueData,
     },
     "/Bear_1/Current": {
-        "name": "bear1.rpm",
-        "model": RPMData
-        #chart
+        "name": "bear1.current",
+        "model": CurrentData
     },
     "/Bear_1/Board_Temp": {
-        "name": "bear1.rpm",
-        "model": RPMData
-        #chart
+        "name": "bear1.board_temp",
+        "model": BearBoardTempData
     },
     "/Bear_1/Motor_Temp": {
-        "name": "bear1.rpm",
-        "model": RPMData
-        #chart
+        "name": "bear1.motor_temp",
+        "model": MotorTempData
     },
     "/UI/Motor": {
-        "name": "bear1.rpm",
-        "model": RPMData
-        #chart
+        "name": "ui.motor",
+        "model": UIData,
+        "type": "motor"
+        
     },
     "/UI/Reverse": {
-        "name": "bear1.rpm",
-        "model": RPMData
-        #chart
+        "name": "ui.reverse",
+        "model": UIData,
+        "type": "reverse"
+        
     },
     "/HS1/Gyro_x": {
-        "name": "bear1.rpm",
-        "model": RPMData
-        #chart
+        "name": "hs1.gyro_x",
+        "model": GyroData,
+        "board": "HS1",
+        "axis": "x"
+        
     },
     "/HS1/Gyro_y": {
-        "name": "bear1.rpm",
-        "model": RPMData
-        #chart
+        "name": "hs1.gyro_y",
+        "model": GyroData,
+        "board": "HS1",
+        "axis": "y"
+        
     },
     "/HS1/Gyro_z": {
-        "name": "bear1.rpm",
-        "model": RPMData
-        #chart
+        "name": "hs1.gyro_z",
+        "model": GyroData,
+        "board": "HS1",
+        "axis": "z"
+        
     },
     "/HS1/Accel_x": {
-        "name": "bear1.rpm",
-        "model": RPMData
-        #chart
+        "name": "hs1.accel_x",
+        "model": AccelData,
+        "board": "HS1",
+        "axis": "x"
+        
     },
     "/HS1/Accel_y": {
-        "name": "bear1.rpm",
-        "model": RPMData
-        #chart
+        "name": "hs1.accel_y",
+        "model": AccelData,
+        "board": "HS1",
+        "axis": "y"
+        
     },
-    "/HS1/Accel_x": {
-        "name": "bear1.rpm",
-        "model": RPMData
-        #chart
+    "/HS1/Accel_z": {
+        "name": "hs1.accel_z",
+        "model": AccelData,
+        "board": "HS1",
+        "axis": "z"
+        
     },
     "/HS1/Pressure": {
-        "name": "bear1.rpm",
-        "model": RPMData
-        #chart
+        "name": "hs1.pressure",
+        "model": PressureData,
+        "board": "HS1"
+        
     },
-    "/HS1/Torque": {
-        "name": "bear1.rpm",
-        "model": RPMData
-        #chart
+    "/HS1/Torque_HS": {
+        "name": "hs1.torque_hs",
+        "model": TorqueData,
+        "board": "HS1"
+        
     },
     "/HS2/Gyro_x": {
-        "name": "bear1.rpm",
-        "model": RPMData
-        #chart
+        "name": "hs2.gyro_x",
+        "model": GyroData,
+        "board": "HS2",
+        "axis": "x"
+        
     },
     "/HS2/Gyro_y": {
-        "name": "bear1.rpm",
-        "model": RPMData
-        #chart
+        "name": "hs2.gyro_y",
+        "model": GyroData,
+        "board": "HS2",
+        "axis": "y"
+        
     },
     "/HS2/Gyro_z": {
-        "name": "bear1.rpm",
-        "model": RPMData
-        #chart
+        "name": "hs2.gyro_z",
+        "model": GyroData,
+        "board": "HS2",
+        "axis": "z"
+        
     },
     "/HS2/Accel_x": {
-        "name": "bear1.rpm",
-        "model": RPMData
-        #chart
+        "name": "hs2.accel_x",
+        "model": AccelData,
+        "board": "HS2",
+        "axis": "x"
+        
     },
     "/HS2/Accel_y": {
-        "name": "bear1.rpm",
-        "model": RPMData
-        #chart
+        "name": "hs2.accel_y",
+        "model": AccelData,
+        "board": "HS2",
+        "axis": "y"
+        
     },
-    "/HS2/Accel_x": {
-        "name": "bear1.rpm",
-        "model": RPMData
-        #chart
+    "/HS2/Accel_z": {
+        "name": "hs2.accel_z",
+        "model": AccelData,
+        "board": "HS2",
+        "axis": "z"
+        
     },
     "/HS2/Pressure": {
-        "name": "bear1.rpm",
-        "model": RPMData
-        #chart
+        "name": "hs2.pressure",
+        "model": PressureData,
+        "board": "HS2"
+        
     },
-    "/HS2/Torque": {
-        "name": "bear1.rpm",
-        "model": RPMData
-        #chart
+    "/HS2/Torque_HS": {
+        "name": "hs2.torque_hs",
+        "model": TorqueData,
+        "board": "HS2"
+        
     },
     "/HS3/Gyro_x": {
-        "name": "bear1.rpm",
-        "model": RPMData
-        #chart
+        "name": "hs3.gyro_x",
+        "model": GyroData,
+        "board": "HS3",
+        "axis": "x"
+        
     },
     "/HS3/Gyro_y": {
-        "name": "bear1.rpm",
-        "model": RPMData
-        #chart
+        "name": "hs3.gyro_y",
+        "model": GyroData,
+        "board": "HS3",
+        "axis": "y"
+        
     },
     "/HS3/Gyro_z": {
-        "name": "bear1.rpm",
-        "model": RPMData
-        #chart
+        "name": "hs3.gyro_z",
+        "model": GyroData,
+        "board": "HS3",
+        "axis": "z"
+        
     },
     "/HS3/Accel_x": {
-        "name": "bear1.rpm",
-        "model": RPMData
-        #chart
+        "name": "hs3.accel_x",
+        "model": AccelData,
+        "board": "HS3",
+        "axis": "x"
+        
     },
     "/HS3/Accel_y": {
-        "name": "bear1.rpm",
-        "model": RPMData
-        #chart
+        "name": "hs3.accel_y",
+        "model": AccelData,
+        "board": "HS3",
+        "axis": "y"
+        
     },
-    "/HS3/Accel_x": {
-        "name": "bear1.rpm",
-        "model": RPMData
-        #chart
+    "/HS3/Accel_z": {
+        "name": "hs3.accel_z",
+        "model": AccelData,
+        "board": "HS3",
+        "axis": "z"
+        
     },
     "/HS3/Pressure": {
-        "name": "bear1.rpm",
-        "model": RPMData
-        #chart
+        "name": "hs3.pressure",
+        "model": PressureData,
+        "board": "HS3"
+        
     },
-    "/HS3/Torque": {
-        "name": "bear1.rpm",
-        "model": RPMData
-        #chart
+    "/HS3/Torque_HS": {
+        "name": "hs3.torque_hs",
+        "model": TorqueData,
+        "board": "HS3"
+        
     },
     "/HS4/Gyro_x": {
-        "name": "bear1.rpm",
-        "model": RPMData
-        #chart
+        "name": "hs4.gyro_x",
+        "model": GyroData,
+        "board": "HS4",
+        "axis": "x"
+        
     },
     "/HS4/Gyro_y": {
-        "name": "bear1.rpm",
-        "model": RPMData
-        #chart
+        "name": "hs4.gyro_y",
+        "model": GyroData,
+        "board": "HS4",
+        "axis": "y"
+        
     },
     "/HS4/Gyro_z": {
-        "name": "bear1.rpm",
-        "model": RPMData
-        #chart
+        "name": "hs4.gyro_z",
+        "model": GyroData,
+        "board": "HS4",
+        "axis": "z"
+        
     },
     "/HS4/Accel_x": {
-        "name": "bear1.rpm",
-        "model": RPMData
-        #chart
+        "name": "hs4.accel_x",
+        "model": AccelData,
+        "board": "HS4",
+        "axis": "x"
+        
     },
     "/HS4/Accel_y": {
-        "name": "bear1.rpm",
-        "model": RPMData
-        #chart
+        "name": "hs4.accel_y",
+        "model": AccelData,
+        "board": "HS4",
+        "axis": "y"
+        
     },
-    "/HS4/Accel_x": {
-        "name": "bear1.rpm",
-        "model": RPMData
-        #chart
+    "/HS4/Accel_z": {
+        "name": "hs4.accel_z",
+        "model": AccelData,
+        "board": "HS4",
+        "axis": "z"
+        
     },
     "/HS4/Pressure": {
-        "name": "bear1.rpm",
-        "model": RPMData
-        #chart
+        "name": "hs4.pressure",
+        "model": PressureData,
+        "board": "HS4",
+        "axis": "z"
+        
     },
-    "/HS4/Torque": {
-        "name": "bear1.rpm",
-        "model": RPMData
-        #chart
+    "/HS4/Torque_HS": {
+        "name": "hs4.torque_hs",
+        "model": TorqueData,
+        "board": "HS4"
+        
     },
     "/FC/Gas": {
-        "name": "bear1.rpm",
-        "model": RPMData
-        #chart
+        "name": "fc.gas",
+        "model": GasData
+        
     },
     "/FC/Brake": {
-        "name": "bear1.rpm",
-        "model": RPMData
-        #chart
+        "name": "fc.brake",
+        "model": BrakeData
+        
     },
     "/Joule_H/Power": {
-        "name": "bear1.rpm",
-        "model": RPMData
-        #chart
+        "name": "joule_h.power",
+        "model": PowerData,
+        "board": "Joule_H"
+        
     },
     "/Joule_L/Power": {
-        "name": "bear1.rpm",
-        "model": RPMData
-        #chart
+        "name": "joule_l.power",
+        "model": PowerData,
+        "board": "Joule_L"
+        
     },
     "/DAQ_Board/Longitude": {
-        "name": "bear1.rpm",
-        "model": RPMData
-        #chart
+        "name": "daq_board.longitude",
+        "model": Location,
+        "direction": "longitude"
+        
     },
     "/DAQ_Board/Latitude": {
-        "name": "bear1.rpm",
-        "model": RPMData
-        #chart
+        "name": "daq_board.latitude",
+        "model": Location,
+        "direction": "latitude"
+        
     },
     "/DAQ_Board/Speed": {
-        "name": "bear1.rpm",
-        "model": RPMData
-        #chart
+        "name": "daq_board.speed",
+        "model": SpeedData
+        
     },
-}
-
-topics_list = {
-    #bear_1
-    "/Bear_1/RPM": {
-        "name": "bear1.rpm",
-        "model": RPMData
-        #chart
-    },
-        "/Bear_1/Motor_State": {
-        "name": "bear1.motor_state",
-        "model": Motor_StateData,
-        "max": 0,
-        "min": 0
-        #io
-    },
-        "/Bear_1/Cruise": {
-        "name": "bear1.cruise",
-        "model": CruiseData
-        #ignore
-    },
-        "/Bear_1/M_Error_Status": {
-        "name": "bear1.m_error_status",
-        "model": M_Error_StatusData,
-        "max": 0,
-        "min": 0
-        #error 1, check, io
-    },
-        "/Bear_1/Throttle": {
-        "name": "bear1.throttle",
-        "model": ThrottleData,
-        "max": 1028,
-        "min": 0
-        #error above 1028: check teensy output range, ignore
-    },
-    "/Bear_1/Brake": {
-        "name": "bear1.brake",
-        "model": BrakeData
-        #check back, ignore
-    },
-    "/Bear_1/Meter_Count": {
-        "name": "bear1.meter_count",
-        "model": Meter_CountData
-        #ignore
-    },    
-#bear_2
-    "/Bear_2/RPM": {
-        "name": "bear2.rpm",
-        "model": RPMData
-    },
-    "/Bear_2/Motor_State": {
-        "name": "bear2.motor_state",
-        "model": Motor_StateData
-    },
-
-    "/Bear_2/Cruise": {
-        "name": "bear2.cruise",
-        "model": CruiseData
-    },
-    "/Bear_2/M_Error_Status": {
-        "name": "bear2.m_error_status",
-        "model": M_Error_StatusData,
-        "max": 0,
-        "min": 0
-        #error 1, check
-
-    },
-    "/Bear_2/Throttle": {
-        "name": "bear2.throttle",
-        "model": ThrottleData
-    },
-    "/Bear_2/Brake": {
-        "name": "bear2.brake",
-        "model": BrakeData
-    },
-    "/Bear_2/Meter_Count": {
-        "name": "bear2.meter_count",
-        "model": Meter_CountData
-    },
-
-    #UI blinkers
-    "/UIMessage/Blink_Left": {
-        "name": "uimessage.blink_left",
-        "model": Blinker,
-    },
-    "/UIMessage/Blink_Right": {
-        "name": "uimessage.blink_right",
-        "model": Blinker,
-    },
-    #HS Message: for analysis
-    "   ": {
-        "name": "hsmessage.temperature",
-        "model": Temperature,
-    },
-    "/HSMessage/Gyro_x": {
-        "name": "hsmessage.gyro_x",
-        "model": Gyro_x
-    },
-    "/HSMessage/Gyro_y": {
-        "name": "hsmessage.gyro_y",
-        "model": Gyro_y
-    },
-    "/HSMessage/Gyro_z": {
-        "name": "hsmessage.gyro_z",
-        "model": Gyro_z,
-    },
-    "/HSMessage/Magnetometer": {
-        "name": "hsmessage.magnetometer",
-        "model": Magnetometer
-    },
-    "/HSMessage/Accel": {
-        "name": "hsmessage.accel",
-        "model": Accel,
-        "serializer": AccelSerializer
-    },
-    #DAQMessage
-    "/DAQ/Speed": {
-        "name": "daq.speed",
-        "model": SpeedData,
-        "serializer": SpeedSerializer
-    },
-    "/DAQ/Longitude": {
-        "name": "daq.longitude",
-        "model": Location
-    },
-    "/DAQ/Latitude": {
-        "name": "daq.latitude",
-        "model": Location
-    }
 }
