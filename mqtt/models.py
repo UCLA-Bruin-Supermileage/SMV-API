@@ -13,114 +13,125 @@ class Trip(models.Model):
 
     def __str__(self):
         return f"{self.id}: {self.name}"
-#set: DAQMessage
+    
+#
+# Bear 1
+#
+class HallVelocityData(models.Model):
+    trip = models.ForeignKey('Trip', on_delete=models.CASCADE)
+    data = models.DecimalField(max_digits=6, decimal_places=3)
+    date = models.DateTimeField()
+    class Meta:
+        verbose_name_plural = " Bear 1: Hall Velocity Data" 
+class MotorTorqueData(models.Model):
+    trip = models.ForeignKey('Trip', on_delete=models.CASCADE)
+    data = models.DecimalField(max_digits=6, decimal_places=3)
+    date = models.DateTimeField()
+    class Meta:
+        verbose_name_plural = " Bear 1: Torque Data" 
+class CurrentData(models.Model):
+    trip = models.ForeignKey('Trip', on_delete=models.CASCADE)
+    data = models.DecimalField(max_digits=6, decimal_places=3)
+    date = models.DateTimeField()
+    class Meta:
+        verbose_name_plural = " Bear 1: Current Data" 
+class BearBoardTempData(models.Model):
+    trip = models.ForeignKey('Trip', on_delete=models.CASCADE)
+    data = models.DecimalField(max_digits=6, decimal_places=3)
+    date = models.DateTimeField()
+    class Meta:
+        verbose_name_plural = " Bear 1: Board Temperature Data" 
+class MotorTempData(models.Model):
+    trip = models.ForeignKey('Trip', on_delete=models.CASCADE)
+    data = models.DecimalField(max_digits=6, decimal_places=3)
+    date = models.DateTimeField()
+    class Meta:
+        verbose_name_plural = " Bear 1: Motor Temperature Data" 
+#
+# UI Data
+#
+class UIData(models.Model):
+    trip = models.ForeignKey('Trip', on_delete=models.CASCADE)
+    type = models.CharField(max_length=64)
+    data = models.DecimalField(max_digits=6, decimal_places=3)
+    date = models.DateTimeField()
+    class Meta:
+        verbose_name_plural = "  UI: Data" 
+#
+# HS Data
+#
+class GyroData(models.Model):
+    trip = models.ForeignKey('Trip', on_delete=models.CASCADE)
+    board = models.CharField(max_length=5, choices=[("HS1", "HS1"), ("HS2", "HS2"),("HS3","HS3"),("HS4","HS4")])
+    axis = models.CharField(max_length=1, choices=[("x", "x"), ("y", "y"), ("z", "z")]) #x, y, z
+    data = models.DecimalField(max_digits=6, decimal_places=3)
+    date = models.DateTimeField()
+    class Meta:
+        verbose_name_plural = "   HS: Gyro Data" 
+class AccelData(models.Model):
+    trip = models.ForeignKey('Trip', on_delete=models.CASCADE)
+    board = models.CharField(max_length=5, choices=[("HS1", "HS1"), ("HS2", "HS2"),("HS3","HS3"),("HS4","HS4")])
+    axis = models.CharField(max_length=1, choices=[("x", "x"), ("y", "y"), ("z", "z")]) #x, y, z
+    data = models.DecimalField(max_digits=6, decimal_places=3)
+    date = models.DateTimeField()
+    class Meta:
+        verbose_name_plural = "   HS: Accel Data" 
+class PressureData(models.Model):
+    trip = models.ForeignKey('Trip', on_delete=models.CASCADE)
+    board = models.CharField(max_length=5, choices=[("HS1", "HS1"), ("HS2", "HS2"),("HS3","HS3"),("HS4","HS4")])
+    data = models.DecimalField(max_digits=6, decimal_places=3)
+    date = models.DateTimeField()
+    class Meta:
+        verbose_name_plural = "   HS: Pressure Data" 
+class TorqueData(models.Model):
+    trip = models.ForeignKey('Trip', on_delete=models.CASCADE)
+    board = models.CharField(max_length=5, choices=[("HS1", "HS1"), ("HS2", "HS2"),("HS3","HS3"),("HS4","HS4")])
+    data = models.DecimalField(max_digits=6, decimal_places=3)
+    date = models.DateTimeField()
+    class Meta:
+        verbose_name_plural = "   HS: Torque Data" 
+#
+# FC Data
+#
+class BrakeData(models.Model):
+    trip = models.ForeignKey('Trip', on_delete=models.CASCADE)
+    data = models.DecimalField(max_digits=6, decimal_places=3)
+    date = models.DateTimeField()
+    class Meta:
+        verbose_name_plural = "    FC: Brake Data" 
+class GasData(models.Model):
+    trip = models.ForeignKey('Trip', on_delete=models.CASCADE)
+    data = models.DecimalField(max_digits=6, decimal_places=3)
+    date = models.DateTimeField()
+    class Meta:
+        verbose_name_plural = "    FC: Gas Data" 
+#
+# Joulemeter Data
+#
+class PowerData(models.Model):
+    trip = models.ForeignKey('Trip', on_delete=models.CASCADE)
+    board = models.CharField(max_length=7, choices=[("Joule_H", "Joule_H"), ("Joule_L", "Joule_L")])
+    data = models.DecimalField(max_digits=6, decimal_places=3)
+    date = models.DateTimeField()
+    class Meta:
+        verbose_name_plural = "    Joule: Power Data" 
+#
+# DAQ Message
+#
 class SpeedData(models.Model):
     trip = models.ForeignKey('Trip', on_delete=models.CASCADE)
     data = models.DecimalField(max_digits=6, decimal_places=3)
     date = models.DateTimeField()
     class Meta:
-        verbose_name_plural = " Speed Data" 
+        verbose_name_plural = "     Speed Data" 
 class Location(models.Model):
     trip = models.ForeignKey('Trip', on_delete=models.CASCADE)
     longitude = models.DecimalField(max_digits=11, decimal_places=7)
     latitude = models.DecimalField(max_digits=11, decimal_places=7)
     date = models.DateTimeField()
     class Meta:
-        verbose_name_plural = " Location Data" 
-#
-# POWER DATA
-#
+        verbose_name_plural = "     Location Data" 
 
-class Temperature(models.Model):
-    trip = models.ForeignKey('Trip', on_delete=models.CASCADE)
-    data = models.DecimalField(max_digits=6, decimal_places=3)
-    date = models.DateTimeField()
-    class Meta:
-        verbose_name_plural = "  Temperature Data" 
-class Gyro_x(models.Model):
-    trip = models.ForeignKey('Trip', on_delete=models.CASCADE)
-    data = models.DecimalField(max_digits=6, decimal_places=3)
-    date = models.DateTimeField()
-    class Meta:
-        verbose_name_plural = "  Gyro X" 
-class Gyro_y(models.Model):
-    trip = models.ForeignKey('Trip', on_delete=models.CASCADE)
-    data = models.DecimalField(max_digits=6, decimal_places=3)
-    date = models.DateTimeField()
-    class Meta:
-        verbose_name_plural = "  Gyro Y" 
-class Gyro_z(models.Model):
-    trip = models.ForeignKey('Trip', on_delete=models.CASCADE)
-    data = models.DecimalField(max_digits=6, decimal_places=3)
-    date = models.DateTimeField()
-    class Meta:
-        verbose_name_plural = "  Gyro Z" 
-class Magnetometer(models.Model):
-    trip = models.ForeignKey('Trip', on_delete=models.CASCADE)
-    data = models.DecimalField(max_digits=6, decimal_places=3)
-    date = models.DateTimeField()
-    class Meta:
-        verbose_name_plural = "  Magnetometer" 
-class Accel(models.Model):
-    trip = models.ForeignKey('Trip', on_delete=models.CASCADE)
-    x = models.DecimalField(max_digits=6, decimal_places=3, default=0, blank=0, null=0)
-    y = models.DecimalField(max_digits=6, decimal_places=3, default=0, blank=0, null=0)
-    z = models.DecimalField(max_digits=6, decimal_places=3, default=0, blank=0, null=0)
-    date = models.DateTimeField()
-    class Meta:
-        verbose_name_plural = "  Acceleration Data" 
-#set: steeringMessage
-class Blinker(models.Model):
-    trip = models.ForeignKey('Trip', on_delete=models.CASCADE)
-    data = models.DecimalField(max_digits=6, decimal_places=3)
-    date = models.DateTimeField()
-    class Meta:
-        verbose_name_plural = "   Blinkers" 
-
-#set: motorMessage
-class RPMData(models.Model):
-    trip = models.ForeignKey('Trip', on_delete=models.CASCADE)
-    data = models.DecimalField(max_digits=6, decimal_places=3)
-    date = models.DateTimeField()
-    class Meta:
-        verbose_name_plural = "    RPM Data" 
-class Motor_StateData(models.Model):
-    trip = models.ForeignKey('Trip', on_delete=models.CASCADE)
-    data = models.DecimalField(max_digits=6, decimal_places=3)
-    date = models.DateTimeField()
-    class Meta:
-        verbose_name_plural = "    Motor State Data" 
-class CruiseData(models.Model):
-    trip = models.ForeignKey('Trip', on_delete=models.CASCADE)
-    data = models.DecimalField(max_digits=6, decimal_places=3)
-    date = models.DateTimeField()
-    class Meta:
-        verbose_name_plural = "    Cruise Data" 
-class M_Error_StatusData(models.Model):
-    trip = models.ForeignKey('Trip', on_delete=models.CASCADE)
-    data = models.DecimalField(max_digits=6, decimal_places=3)
-    date = models.DateTimeField()
-    class Meta:
-        verbose_name_plural = "    M Error Status Data" 
-class ThrottleData(models.Model):
-    trip = models.ForeignKey('Trip', on_delete=models.CASCADE)
-    data = models.DecimalField(max_digits=6, decimal_places=3)
-    date = models.DateTimeField()
-    class Meta:
-        verbose_name_plural = "    Throttle Data" 
-class BrakeData(models.Model):
-    trip = models.ForeignKey('Trip', on_delete=models.CASCADE)
-    data = models.DecimalField(max_digits=6, decimal_places=3)
-    date = models.DateTimeField()
-    class Meta:
-        verbose_name_plural = "    Brake Data" 
-
-class Meter_CountData(models.Model):
-    trip = models.ForeignKey('Trip', on_delete=models.CASCADE)
-    data = models.DecimalField(max_digits=6, decimal_places=3)
-    date = models.DateTimeField()
-    class Meta:
-        verbose_name_plural = "    Meter Count Data" 
 
 #extra data
 class MessageHistory(models.Model):

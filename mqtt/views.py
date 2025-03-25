@@ -1,7 +1,7 @@
 from django.shortcuts import render
 from django.http.response import JsonResponse, Http404
 from .helper import run, test_mqttStress
-from .models import Trip, Accel
+from .models import Trip, AccelData
 import threading
 from .topics import topics_list
 import json
@@ -112,7 +112,7 @@ class LastNDataViewset(viewsets.ViewSet):
     """
     authentication_classes = [JWTAuthentication] # 
     permission_classes = [permissions.AllowAny] # 
-    queryset = Accel.objects.all()
+    queryset = AccelData.objects.all()
     def list(self, request):
         # Note the use of `get_queryset()` instead of `self.queryset`
         try:

@@ -46,17 +46,15 @@ def store(msg):
             MQTTError.objects.create(module='mqtt', event='receive', message=f'Invalid Argument {msg.payload.decode()}', error=True, time=datetime.now(), trip=Trip.objects.last())
         
         else:
-            #error is false unless specifically set
-            error = False
-            if "max" in topics[msg.topic]:
-                #only error handle if max is defined in topics.py
-                if not topics[msg.topic]['max'] >= payload and topics[msg.topic]['min'] <= payload:
-                    #if payload not in range, error
-                    error = True
-            
-            MQTTError.objects.create(module='mqtt', event='receive', message=f'{payload}', error=error, time=datetime.now(), trip=Trip.objects.last())
+            #error is false unless specifically set          
+            MQTTError.objects.create(module='mqtt', event='receive', message=f'{payload}', error=False, time=datetime.now(), trip=Trip.objects.last())
             #update associated model
-            topics[msg.topic]['model'].objects.create(date=datetime.now(), data=payload, trip=Trip.objects.last()) 
+            if "Gyro" in msg.topic or "Accel" in msg.topic:
+                topics[msg.topic]['model'].objects.create(date=datetime.now(), data=payload, trip=Trip.objects.last(), board=topics[msg.topic]['board'], axis=topics[msg.topic]['axis']) 
+            elif msg.topic in ["/HS1/Torque_HS", "/HS2/Torque_HS","/HS3/Torque_HS","/HS4/Torque_HS","/HS1/Pressure", "/HS2/Pressure","/HS3/Pressure","/HS4/Pressure","/Joule_L/Power", "/Joule_H/Power"]:
+                topics[msg.topic]['model'].objects.create(date=datetime.now(), data=payload, trip=Trip.objects.last(), board=topics[msg.topic]['board']) 
+            else:
+                topics[msg.topic]['model'].objects.create(date=datetime.now(), data=payload, trip=Trip.objects.last()) 
             if str(msg.topic) == "/DAQ/Latitude" and str(msg.topic) == "/DAQ/Longitude":
                 #do NOT deal with long/lat here. need to implement separate feature to store it
                 pass

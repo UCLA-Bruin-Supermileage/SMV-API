@@ -1,5 +1,5 @@
 from django.contrib.auth.models import Group, User
-from .models import Trip, Accel, SpeedData
+from .models import *
 from rest_framework import serializers
 
 
@@ -16,8 +16,12 @@ class TripSerializer(serializers.HyperlinkedModelSerializer):
 
 class AccelSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
-        model = Accel
-        fields = ['id', 'name', 'date_created', 'x', 'y', 'z']
+        model = AccelData
+        fields = ['id', 'name', 'date_created', 'x', 'y', 'z', 'board']
+class GyroSerializer(serializers.HyperlinkedModelSerializer):
+    class Meta:
+        model = GyroData
+        fields = ['id', 'name', 'date_created', 'x', 'y', 'z', 'board']
 class SpeedSerializer(serializers.ModelSerializer):
     trip = serializers.PrimaryKeyRelatedField(queryset=Trip.objects.all())  # ✅ Use ID instead of URL
     class Meta:
