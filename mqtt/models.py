@@ -81,6 +81,8 @@ class PressureData(models.Model):
     board = models.CharField(max_length=5, choices=[("HS1", "HS1"), ("HS2", "HS2"),("HS3","HS3"),("HS4","HS4")])
     data = models.DecimalField(max_digits=6, decimal_places=3)
     date = models.DateTimeField()
+    def __str__(self):
+        return f"{self.date}: {self.board}: {self.data}"
     class Meta:
         verbose_name_plural = "   HS: Pressure Data" 
 class TorqueData(models.Model):
@@ -88,6 +90,8 @@ class TorqueData(models.Model):
     board = models.CharField(max_length=5, choices=[("HS1", "HS1"), ("HS2", "HS2"),("HS3","HS3"),("HS4","HS4")])
     data = models.DecimalField(max_digits=6, decimal_places=3)
     date = models.DateTimeField()
+    def __str__(self):
+        return f"{self.date}: {self.board}: {self.data}"
     class Meta:
         verbose_name_plural = "   HS: Torque Data" 
 #
@@ -97,12 +101,16 @@ class BrakeData(models.Model):
     trip = models.ForeignKey('Trip', on_delete=models.CASCADE)
     data = models.DecimalField(max_digits=6, decimal_places=3)
     date = models.DateTimeField()
+    def __str__(self):
+        return f"{self.date}: {self.data}"
     class Meta:
         verbose_name_plural = "    FC: Brake Data" 
 class GasData(models.Model):
     trip = models.ForeignKey('Trip', on_delete=models.CASCADE)
     data = models.DecimalField(max_digits=6, decimal_places=3)
     date = models.DateTimeField()
+    def __str__(self):
+        return f"{self.date}: {self.data}"
     class Meta:
         verbose_name_plural = "    FC: Gas Data" 
 #
@@ -113,6 +121,8 @@ class PowerData(models.Model):
     board = models.CharField(max_length=7, choices=[("Joule_H", "Joule_H"), ("Joule_L", "Joule_L")])
     data = models.DecimalField(max_digits=6, decimal_places=3)
     date = models.DateTimeField()
+    def __str__(self):
+        return f"{self.date}: {self.board}: {self.data}"
     class Meta:
         verbose_name_plural = "    Joule: Power Data" 
 #
@@ -123,14 +133,14 @@ class SpeedData(models.Model):
     data = models.DecimalField(max_digits=6, decimal_places=3)
     date = models.DateTimeField()
     class Meta:
-        verbose_name_plural = "     Speed Data" 
+        verbose_name_plural = "     DAQ: Speed Data" 
 class Location(models.Model):
     trip = models.ForeignKey('Trip', on_delete=models.CASCADE)
     longitude = models.DecimalField(max_digits=11, decimal_places=7)
     latitude = models.DecimalField(max_digits=11, decimal_places=7)
     date = models.DateTimeField()
     class Meta:
-        verbose_name_plural = "     Location Data" 
+        verbose_name_plural = "     DAQ: Location Data" 
 
 
 #extra data

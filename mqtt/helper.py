@@ -40,6 +40,7 @@ def store(msg):
     try:
         #1. Compare msg value. Is it in bounds of min/max?
         payload = round(abs(float(msg.payload.decode())), 3) #absolute value of input, rounded to 3 decimal places
+        print(f"{msg.topic}: {payload}")
         if round(float(msg.payload.decode()), 3) > 999.000 or round(float(msg.payload.decode()), 3) < 0:
             #if out of bounds(needs to be [0, 999.000))
             payload =  round(float(msg.payload.decode()), 3)
@@ -79,8 +80,8 @@ def run():
     client.loop_forever()
 
 
-# def publish(client, topic, message):
-#     client.publish(topic, message)
+def publish(client, topic, message):
+    client.publish(topic, message)
 
 # def send_location(lat, long):
 #     channel_layer = get_channel_layer()
@@ -94,6 +95,7 @@ def test_mqttStress(numPerSec):
     ct = 0
     while ct < numPerSec:
         for key, val in topics.items():
+            print(key)
             client1.publish(key, randint(-5,100))
             time.sleep(1/numPerSec)
             ct +=1
