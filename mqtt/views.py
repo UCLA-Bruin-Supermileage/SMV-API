@@ -103,8 +103,6 @@ class TripViewset(viewsets.ModelViewSet):
         """
         trip = Trip.objects.latest('id')
         if trip.active != True:
-            print(trip.stop)
-            print(trip.stop == datetime.fromtimestamp(0))
             return Response({'detail': 'Trip already stopped'}, status=404)
         trip.stop = datetime.now()
         trip.active = False
