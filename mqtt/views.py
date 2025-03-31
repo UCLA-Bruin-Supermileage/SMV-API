@@ -90,7 +90,22 @@ class TripViewset(viewsets.ModelViewSet):
         Input: {"name": "trip_name"} \n
         Returns: New Trip JSON
         """
-        trip = Trip.objects.create(name=request.data['name'], date_created=date.today(), start=datetime.now())
+        trip = Trip.objects.create(name=request.data['name'], date_created=date.today(), start=datetime.now(), active=True)
+        trip.save()
+        serializer = self.get_serializer(trip)
+        return Response(serializer.data)
+    @action(detail=False, methods=['get'], permission_classes=[permissions.AllowAny])
+    def stop(self, request, *args, **kwargs):
+        """
+        Stop most recent trip if it has not been stopped already \n
+        Input: None \n
+        Returns: Trip JSON
+        """
+        trip = Trip.objects.latest('id')
+        if trip.active != True:
+            return Response({'detail': 'Trip already stopped'}, status=404)
+        trip.stop = datetime.now()
+        trip.active = False
         trip.save()
         serializer = self.get_serializer(trip)
         return Response(serializer.data)
