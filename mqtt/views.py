@@ -114,10 +114,58 @@ class TripViewset(viewsets.ModelViewSet):
     def list(self, request, *args, **kwargs):
         """
         List all trips, no authentication required
+        {
+   "sensor": "/DAQ_Board/Speed",
+   "trip_id": 167,
+   "format": "json"
+}
         """
         queryset = self.get_queryset()  # Fetch trips
         serializer = self.get_serializer(queryset, many=True)
         return Response(serializer.data)
+    
+    @action(detail=False, methods=['get', 'post'], permission_classes=[permissions.AllowAny])
+    @extend_schema(
+        parameters=[
+            OpenApiParameter(name='sensor', type=OpenApiTypes.STR, description='Sensor name', required=True),
+            OpenApiParameter(name='trip_id', type=OpenApiTypes.INT, description='Trip ID to filter (optional)', required=False),
+            OpenApiParameter(name='format', type=OpenApiTypes.STR, description='"json" or "csv"', required=True),
+        ],
+        responses={200: 'Exported data as JSON or downloadable CSV'}
+    )
+    def export(self, request, *args, **kwargs):
+        #name=request.data['name']
+        sensor = request.data['sensor']
+        #request.data.get('sensor')
+        requestID = request.data['trip_id']
+        #requestID = request.data.get('trip_id')
+        formatRequested = request.data['format']
+        #formatRequested = request.data.get('format')
+
+        if not requestID:
+            return Response({"error": "Missing request ID"}, status=400)
+        
+        requestID = int(requestID)
+
+        # topics[msg.topic]['model'].objects.create(date=datetime.now(), data=payload, trip=Trip.objects.last()) 
+
+        Model = topics_list[sensor]['model']
+        
+        queryset = Model.objects.filter(trip_id=requestID)
+
+        if formatRequested == 'json':
+            serializer = topics_list[sensor]['serializer'](queryset, many=True)
+            return Response(serializer.data)
+        
+        response = HttpResponse(content_type='text/csv')
+        response['Content-Disposition'] = 'attachment; filename="sensor_data.csv"'
+        writer = csv.writer(response)
+        writer.writerow(['Date', 'Data', 'Trip'])
+        # Write all rows at once
+        for item in queryset:
+            writer.writerow([item.date, item.data, item.trip_id])
+
+        return response
  
 class LastNDataViewset(viewsets.ViewSet):
     """
@@ -138,31 +186,6 @@ class LastNDataViewset(viewsets.ViewSet):
         except Exception as e:
             return Response({'detail': f'Error: {e}'}, status=404)
         return Response(serializer.data)
-
-    def export(self, request, *args, **kwargs):
-        sensor = request.data.get('sensor')
-        requestID = request.data.get('trip_id')
-        formatRequested = request.data.get('format')
-
-        if not requestID:
-            return Response({"error": "Missing request ID"}, status=400)
-        
-        requestId = int(requestID)
-
-        # topics[msg.topic]['model'].objects.create(date=datetime.now(), data=payload, trip=Trip.objects.last()) 
-        
-        model = topics[sensor]['model'].objects.filter(id=requestID).first()
-
-        if(formatRequested == 'json'):
-            serializer = self.get_serializer(model)
-            return Response(serializer.data)
-        
-        response = HttpResponse(content_type='text/csv')
-        response['Content-Disposition'] = 'attachment; filename="sensor_data.csv"'
-        writer = csv.writer(response)
-        writer.writerow(['Date', 'Data', 'Trip'])
-        writer.writerow([model.date, model.data, model.trip])
-        return response
 
 class StartStop(viewsets.ViewSet):
     authentication_classes = [JWTAuthentication] # 
