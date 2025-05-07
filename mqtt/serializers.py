@@ -24,7 +24,7 @@ class GyroSerializer(serializers.HyperlinkedModelSerializer):
         fields = ['id', 'name', 'date_created', 'x', 'y', 'z', 'board']
 
 class SpeedSerializer(serializers.ModelSerializer):
-    trip = serializers.PrimaryKeyRelatedField(queryset=Trip.objects.all())  # ✅ Use ID instead of URL
+    trip = serializers.PrimaryKeyRelatedField(queryset=Trip.objects.all()) 
     class Meta:
         model = SpeedData
         fields = ['id', 'trip', 'date', 'data']
