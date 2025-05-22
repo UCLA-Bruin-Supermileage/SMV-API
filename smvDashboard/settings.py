@@ -19,7 +19,7 @@ load_dotenv()
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = os.environ.get("DEBUG", "True").lower() in ("true", "1", "yes")
 #IP ADDRESS CONFIG
-ip_address = "128.97.3.48" #internal or zerotier IPs based on production status(DEBUG: 128.97.3.48)
+ip_address = "192.168.69.2" #internal or zerotier IPs based on production status(DEBUG: 128.97.3.48)
 #Sentry: Error Logging
 sentry_sdk.init(
     dsn="https://8c2277f2745be76cc3c8f9b1fb3afd3b@o1217115.ingest.sentry.io/4506261170356224",
