@@ -82,6 +82,7 @@ class TripViewset(viewsets.ModelViewSet):
             serializer = self.get_serializer(trip)
             return Response(serializer.data)
         return Response({'detail': 'No trips found'}, status=404)
+    
     @extend_schema(
             parameters = [OpenApiParameter(name='name', description="New Trip Name", type=OpenApiTypes.STR, required=True)],
     )
@@ -96,6 +97,7 @@ class TripViewset(viewsets.ModelViewSet):
         trip.save()
         serializer = self.get_serializer(trip)
         return Response(serializer.data)
+    
     @action(detail=False, methods=['get'], permission_classes=[permissions.AllowAny])
     def stop(self, request, *args, **kwargs):
         """
@@ -111,14 +113,15 @@ class TripViewset(viewsets.ModelViewSet):
         trip.save()
         serializer = self.get_serializer(trip)
         return Response(serializer.data)
+    
     def list(self, request, *args, **kwargs):
         """
         List all trips, no authentication required
-        {
-   "sensor": "/DAQ_Board/Speed",
-   "trip_id": 167,
-   "format": "json"
-}
+            {
+            "sensor": "/DAQ_Board/Speed",
+            "trip_id": 167,
+            "format": "json"
+            }
         """
         queryset = self.get_queryset()  # Fetch trips
         serializer = self.get_serializer(queryset, many=True)
@@ -134,37 +137,37 @@ class TripViewset(viewsets.ModelViewSet):
         responses={200: 'Exported data as JSON or downloadable CSV'}
     )
     def export(self, request, *args, **kwargs):
-        #name=request.data['name']
+        #1. Pull POST data
         sensor = request.data['sensor']
-        #request.data.get('sensor')
         requestID = request.data['trip_id']
-        #requestID = request.data.get('trip_id')
         formatRequested = request.data['format']
-        #formatRequested = request.data.get('format')
-
         if not requestID:
             return Response({"error": "Missing request ID"}, status=400)
-        
         requestID = int(requestID)
-
-        # topics[msg.topic]['model'].objects.create(date=datetime.now(), data=payload, trip=Trip.objects.last()) 
-
-        Model = topics_list[sensor]['model']
+        try:
+            Model = topics_list[sensor]['model']
+        except KeyError:
+            #sensor does not exist. notify user
+            return Response({"error": f"Invalid sensor `{sensor}`"}, status=400)
         
         queryset = Model.objects.filter(trip_id=requestID)
-
+        #2a. JSON
         if formatRequested == 'json':
-            serializer = topics_list[sensor]['serializer'](queryset, many=True)
+            try:
+                serializer = topics_list[sensor]['serializer'](queryset, many=True)
+            except KeyError:
+                return Response({"error": f"Sensor `{sensor}` does not have an associated serializer. Please notify DAQ team."}, status=400)
+
             return Response(serializer.data)
         
+        #2b. CSV
         response = HttpResponse(content_type='text/csv')
-        response['Content-Disposition'] = 'attachment; filename="sensor_data.csv"'
+        response['Content-Disposition'] = f'attachment; filename="{sensor} Data.csv"'
         writer = csv.writer(response)
         writer.writerow(['Date', 'Data', 'Trip'])
         # Write all rows at once
         for item in queryset:
             writer.writerow([item.date, item.data, item.trip_id])
-
         return response
  
 class LastNDataViewset(viewsets.ViewSet):
@@ -175,8 +178,8 @@ class LastNDataViewset(viewsets.ViewSet):
         n: number of data points to return
         sensor: sensor to return data (formatted from topics.py)
     """
-    authentication_classes = [JWTAuthentication] # 
-    permission_classes = [permissions.AllowAny] # 
+    authentication_classes = [JWTAuthentication] 
+    permission_classes = [permissions.AllowAny] 
     queryset = AccelData.objects.all()
     def list(self, request):
         # Note the use of `get_queryset()` instead of `self.queryset`
@@ -201,23 +204,6 @@ class StartStop(viewsets.ViewSet):
             trip.save()
             return Response({'status': '200'})
         return Response({'detail': 'No trips found'}, status=404)
-# def login_view(request):
-#     if request.method == "POST":
-#         # Attempt to sign user in
-#         username = request.POST["username"]
-#         password = request.POST["password"]
-#         user = authenticate(request, username=username, password=password)
-
-#         # Check if authentication successful
-#         if user is not None:
-#             login(request, user)
-#             return HttpResponseRedirect(reverse("dash_admin"), status=302)
-#         else:
-#             return render(request, "mqtt/dashboard_admin.html", {
-#                 "message": "Invalid username and/or password."
-#             })
-#     else:
-#         raise Http404
 
 #threading: starts and maintains MQTT subscription in the background, using run(topics) function from helper
 thread = threading.Thread(target=run, name="MQTT_Subscribe", daemon=True)
