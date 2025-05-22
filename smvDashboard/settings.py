@@ -42,7 +42,7 @@ ALLOWED_HOSTS_TYPES = {
     "dev":
     ['localhost'], 
      "prod":
-    ['smv.seas.ucla.edu', '192.168.69.10', '127.0.0.1', 'dev.smv.matthewtsai.uk'], 
+    ['smv.seas.ucla.edu', '192.168.69.10', '127.0.0.1', 'dev.smv.matthewtsai.uk', 'dev-django.bruinsmv.com'], 
 }
 
 ALLOWED_HOSTS = ALLOWED_HOSTS_TYPES['dev' if DEBUG else 'prod']

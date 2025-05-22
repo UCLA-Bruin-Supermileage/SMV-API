@@ -297,7 +297,7 @@ topics_list = {
     },
     "/DAQ_Board/Speed": {
         "name": "daq_board.speed",
-        "model": SpeedData
-        
+        "model": SpeedData,
+        "serializer": SpeedSerializer
     },
 }
