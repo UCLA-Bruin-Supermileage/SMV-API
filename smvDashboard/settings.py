@@ -22,7 +22,7 @@ DEBUG = os.environ.get("DEBUG", "True").lower() in ("true", "1", "yes")
 ip_address = "192.168.69.2" #internal or zerotier IPs based on production status(DEBUG: 128.97.3.48)
 #Sentry: Error Logging
 sentry_sdk.init(
-    dsn="https://8c2277f2745be76cc3c8f9b1fb3afd3b@o1217115.ingest.sentry.io/4506261170356224",
+    dsn="https://214e4bc41b39f2c49cdce125c61d6afd@o4509379567747072.ingest.us.sentry.io/4509379628367872",
     traces_sample_rate=1.0,
     profiles_sample_rate=1.0,
     environment=f"{'development' if DEBUG else 'production'}",

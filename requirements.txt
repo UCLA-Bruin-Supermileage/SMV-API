@@ -3,7 +3,7 @@ paho-mqtt==1.6.1
 psycopg[binary]
 python-dotenv
 channels-redis
-sentry_sdk #error logging
+sentry-sdk[django] #error logging
 pytz #timezone
 djangorestframework
 djangorestframework-simplejwt
