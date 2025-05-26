@@ -42,7 +42,7 @@ ALLOWED_HOSTS_TYPES = {
     "dev":
     ['localhost'], 
      "prod":
-    ['smv.seas.ucla.edu', '192.168.69.10', '127.0.0.1', 'dev.smv.matthewtsai.uk', 'dev-django.bruinsmv.com'], 
+    ['smv.seas.ucla.edu', '192.168.69.10', '127.0.0.1', 'dev.smv.matthewtsai.uk', 'prod-django.bruinsmv.com'], 
 }
 
 ALLOWED_HOSTS = ALLOWED_HOSTS_TYPES['dev' if DEBUG else 'prod']
@@ -184,4 +184,4 @@ STATICFILES_DIRS = (
 # Default primary key field type
 # https://docs.djangoproject.com/en/3.2/ref/settings/#default-auto-field
 
-CSRF_TRUSTED_ORIGINS = ['https://smv.seas.ucla.edu', 'https://dev.smv.matthewtsai.uk', 'https://192.168.69.10', 'https://dev-django.bruinsmv.com']
+CSRF_TRUSTED_ORIGINS = ['https://smv.seas.ucla.edu', 'https://dev.smv.matthewtsai.uk', 'https://192.168.69.10', 'https://prod-django.bruinsmv.com']
