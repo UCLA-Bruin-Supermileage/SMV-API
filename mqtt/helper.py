@@ -11,7 +11,7 @@ from random import randint
 import time
 
 sys.path.append('..')
-from smvDashboard.settings import ip_address
+from smvDashboard.settings import ip_address_mqtt as ip_address
 
 
 # logger = logging.getLogger(__name__)

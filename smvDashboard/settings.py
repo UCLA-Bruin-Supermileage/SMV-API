@@ -19,7 +19,8 @@ load_dotenv()
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = os.environ.get("DEBUG", "True").lower() in ("true", "1", "yes")
 #IP ADDRESS CONFIG
-ip_address = "192.168.69.2" #internal or zerotier IPs based on production status(DEBUG: 128.97.3.48)
+ip_address_db = "192.168.69.15" #internal or zerotier IPs based on production status(DEBUG: 128.97.3.48)
+ip_address_mqtt = "192.168.69.16"
 #Sentry: Error Logging
 sentry_sdk.init(
     dsn="https://214e4bc41b39f2c49cdce125c61d6afd@o4509379567747072.ingest.us.sentry.io/4509379628367872",
@@ -121,7 +122,7 @@ DATABASES = {
         'NAME': 'postgres',
         'USER': 'postgres',
         'PASSWORD': os.environ.get("POSTGRES_PW"),
-        'HOST': f'{ip_address}',
+        'HOST': f'{ip_address_db}',
         'PORT': '5432',
         'OPTIONS': {'sslmode': 'prefer'},
     },
