@@ -17,3 +17,17 @@ jobs:
     - uses: actions/checkout@v4
     - name: Build the Docker image
       run: docker build . --file Dockerfile --tag smv-api --label "runnumber=${GITHUB_RUN_ID}"
+    
+    - name: Run container to verify it starts
+      run: |
+        docker run -d --rm --name smv-test -p 80:80 smv-api
+        sleep 5
+        docker ps -a
+
+    - name: Check logs to ensure container didn’t crash
+      run: |
+        docker logs smv-test
+
+    - name: Stop container
+      if: always()
+      run: docker stop smv-test || true
