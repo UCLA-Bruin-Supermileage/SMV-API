@@ -20,7 +20,8 @@ load_dotenv()
 DEBUG = os.environ.get("DEBUG", "True").lower() in ("true", "1", "yes")
 #IP ADDRESS CONFIG
 ip_address_db = "192.168.69.15" #internal or zerotier IPs based on production status(DEBUG: 128.97.3.48)
-ip_address_mqtt = "192.168.69.16"
+ip_address_mqtt = "128.97.3.48"
+
 #Sentry: Error Logging
 sentry_sdk.init(
     dsn="https://214e4bc41b39f2c49cdce125c61d6afd@o4509379567747072.ingest.us.sentry.io/4509379628367872",
@@ -43,7 +44,7 @@ ALLOWED_HOSTS_TYPES = {
     "dev":
     ['localhost'], 
      "prod":
-    ['smv.seas.ucla.edu', '192.168.69.10', '127.0.0.1', 'dev.smv.matthewtsai.uk', 'prod-django.bruinsmv.com'], 
+    ['prod-django.bruinsmv.com'], 
 }
 
 ALLOWED_HOSTS = ALLOWED_HOSTS_TYPES['dev' if DEBUG else 'prod']
@@ -185,4 +186,4 @@ STATICFILES_DIRS = (
 # Default primary key field type
 # https://docs.djangoproject.com/en/3.2/ref/settings/#default-auto-field
 
-CSRF_TRUSTED_ORIGINS = ['https://smv.seas.ucla.edu', 'https://dev.smv.matthewtsai.uk', 'https://192.168.69.10', 'https://prod-django.bruinsmv.com']
+CSRF_TRUSTED_ORIGINS = ['https://prod-django.bruinsmv.com']
