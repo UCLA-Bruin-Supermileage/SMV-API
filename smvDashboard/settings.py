@@ -20,7 +20,7 @@ load_dotenv()
 DEBUG = os.environ.get("DEBUG", "True").lower() in ("true", "1", "yes")
 #IP ADDRESS CONFIG
 ip_address_db = "192.168.69.15" #internal or zerotier IPs based on production status(DEBUG: 128.97.3.48)
-ip_address_mqtt = "128.97.3.48"
+ip_address_mqtt = "192.168.69.16"
 
 #Sentry: Error Logging
 sentry_sdk.init(
