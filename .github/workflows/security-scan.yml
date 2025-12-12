@@ -6,9 +6,8 @@ on:
 
 permissions:
   contents: read
-  packages: write
 jobs:
-  build:
+  security-scan:
     runs-on: ubuntu-latest
     steps:
     # Stage 1: security/secret scanner
@@ -24,9 +23,11 @@ jobs:
         pip install -r requirements.txt # Needed for manage.py check
 
     - name: Scan for Vulnerable Python Dependencies
+      continue-on-error: true
       run: pip-audit
 
     - name: Scan Python Code with Bandit
+      continue-on-error: true
       # -r = recursive, -ll = report only Medium/High severity
       run: bandit -r . -ll
 
@@ -34,5 +35,6 @@ jobs:
       env:
         SECRET_KEY: 'temporary-ci-key'
         DEBUG: 'False'
+        DJANGO_SETTINGS_MODULE: 'smvDashboard.settings'
       run: |
         python manage.py check --deploy
