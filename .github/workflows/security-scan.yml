@@ -1,0 +1,40 @@
+name: Security Scan
+
+on:
+  pull_request:
+    branches: [ "master" ]
+
+permissions:
+  contents: read
+jobs:
+  security-scan:
+    runs-on: ubuntu-latest
+    steps:
+    # Stage 1: security/secret scanner
+    - uses: actions/checkout@v4
+    - name: Set up Python
+      uses: actions/setup-python@v4
+      with:
+          python-version: '3.11'  # Match your project version
+
+    - name: Install Security Tools
+      run: |
+        pip install bandit pip-audit
+        pip install -r requirements.txt # Needed for manage.py check
+
+    - name: Scan for Vulnerable Python Dependencies
+      continue-on-error: true
+      run: pip-audit
+
+    - name: Scan Python Code with Bandit
+      continue-on-error: true
+      # -r = recursive, -ll = report only Medium/High severity
+      run: bandit -r . -ll
+
+    - name: Django Production Settings Check
+      env:
+        SECRET_KEY: 'temporary-ci-key'
+        DEBUG: 'False'
+        DJANGO_SETTINGS_MODULE: 'smvDashboard.settings'
+      run: |
+        python manage.py check --deploy
