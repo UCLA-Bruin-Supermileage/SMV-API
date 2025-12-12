@@ -15,6 +15,7 @@ jobs:
 
     steps:
     # Stage 1: security/secret scanner
+    - uses: actions/checkout@v4
     - name: Set up Python
       uses: actions/setup-python@v4
       with:
@@ -40,7 +41,6 @@ jobs:
         python manage.py check --deploy
         
     # Stage 2: Build and validate docker image
-    - uses: actions/checkout@v4
     - name: Build the Docker image
       run: docker build . --file Dockerfile --tag smv-api --label "runnumber=${GITHUB_RUN_ID}"
     
