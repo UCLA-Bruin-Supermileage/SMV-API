@@ -14,6 +14,33 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
+    # Stage 1: security/secret scanner
+    - name: Set up Python
+      uses: actions/setup-python@v4
+      with:
+          python-version: '3.11'  # Match your project version
+
+    - name: Install Security Tools
+      run: |
+        pip install bandit pip-audit
+        pip install -r requirements.txt # Needed for manage.py check
+
+    - name: 🛡️ Scan for Vulnerable Python Dependencies
+      run: pip-audit
+
+    - name: 🕵️ Scan Python Code with Bandit
+      # -r = recursive, -ll = report only Medium/High severity
+      run: bandit -r . -ll
+
+    - name: ⚙️ Django Production Settings Check
+      env:
+        SECRET_KEY: 'temporary-ci-key'
+        DEBUG: 'False'
+      run: |
+        # The --deploy flag enables the security checks
+        python manage.py check --deploy
+        
+    # Stage 2: Build and validate docker image
     - uses: actions/checkout@v4
     - name: Build the Docker image
       run: docker build . --file Dockerfile --tag smv-api --label "runnumber=${GITHUB_RUN_ID}"
@@ -42,3 +69,4 @@ jobs:
     - name: Stop container
       if: always()
       run: docker stop smv-test || true
+    
