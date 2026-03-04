@@ -1,4 +1,4 @@
-Django==4.2.27
+Django==4.2.29
 paho-mqtt==1.6.1
 psycopg[binary]
 python-dotenv
